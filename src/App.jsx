@@ -44,8 +44,6 @@ export default class App extends Component {
 
         grid[foodPosition.get("x")][foodPosition.get("y")] = "o";
 
-        console.log(Cube);
-
         let WebGLSize = {
             width: 400,
             height: 400
