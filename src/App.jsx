@@ -46,13 +46,17 @@ export default class App extends Component {
 
         console.log(Cube);
 
-        return (
-//            <Scene camera="maincamera" width={window.innerWidth} height={window.innerHeight}>
-//                <Camera width={window.innerWidth} height={window.innerHeight} />
-//                {snakeBody.map(createSection)}
-//            </Scene>
+        let WebGLSize = {
+            width: 400,
+            height: 400
+        };
 
+        return (
             <div>
+                <Scene camera="maincamera" width={WebGLSize.width} height={WebGLSize.height}>
+                    <Camera width={WebGLSize.width} height={WebGLSize.height} />
+                </Scene>
+
                 <pre style={{lineHeight: "8px"}}>
                     {grid}
                 </pre>
