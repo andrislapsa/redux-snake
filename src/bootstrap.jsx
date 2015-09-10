@@ -10,33 +10,31 @@ import initialState from "./initialState";
 import * as actionCreators from "./actions/actionCreators";
 import { listenToKeys } from "./keyboardController";
 
-const mergedReducers = (appState, action) => {
-	return appState.withMutations(state => {
-		state = initGame(state, action);
+const mergedReducers = (state, action) => {
+    state = initGame(state, action);
 
-		state = spawnFood(state, action);
+    state = spawnFood(state, action);
 
-		state = grow(state, action);
+    state = grow(state, action);
 
-		state.set(
-			"mainLoopTimerID",
-			startGame(state.get("mainLoopTimerID"), action)
-		);
+    state = state.set(
+        "mainLoopTimerID",
+        startGame(state.get("mainLoopTimerID"), action)
+    );
 
-		state.set(
-			"mainLoopTimerID",
-			pauseGame(state.get("mainLoopTimerID"), action)
-		);
+    state = state.set(
+        "mainLoopTimerID",
+        pauseGame(state.get("mainLoopTimerID"), action)
+    );
 
-		state = move(state, action);
+    state = move(state, action);
 
-		state.set(
-			"direction",
-			changeDirection(state.get("direction"), action)
-		);
+    state = state.set(
+        "direction",
+        changeDirection(state.get("direction"), action)
+    );
 
-		return state;
-	});
+    return state;
 };
 
 
