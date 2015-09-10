@@ -53,8 +53,9 @@ export default class App extends Component {
 
         return (
             <div>
-                <Scene camera="maincamera" width={WebGLSize.width} height={WebGLSize.height}>
-                    <Camera width={WebGLSize.width} height={WebGLSize.height} />
+                <Scene camera="maincamera" {...WebGLSize}>
+                    <Camera {...WebGLSize} />
+                    {snakeBody.map(createSection)}
                 </Scene>
 
                 <pre style={{lineHeight: "8px"}}>
