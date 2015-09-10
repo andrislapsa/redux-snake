@@ -51,8 +51,8 @@ export default class App extends Component {
         grid[foodPosition.get("x")][foodPosition.get("y")] = "o";
 
         let WebGLSize = {
-            width: gridSize.get("x") * 10,
-            height: gridSize.get("y") * 10
+            width: gridSize.get("width") * 10,
+            height: gridSize.get("height") * 10
         };
 
         return (
