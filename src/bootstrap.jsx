@@ -4,14 +4,16 @@ import { Provider } from "react-redux";
 import { Map } from "immutable";
 
 import App from "./App.jsx";
-import { changeDirection } from "./reducers/snake";
+import { move, changeDirection } from "./reducers/snake";
 import * as snakeUtil from "./utils/snakeUtil";
 
 const mergedReducers = (appState, action) => {
 	return appState.withMutations(state => {
+		state = move(state, action);
+
 		state.set(
 			"direction", 
-			changeDirection(state, action)
+			changeDirection(state.get("direction"), action)
 		);
 
 		return state;

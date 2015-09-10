@@ -31,6 +31,22 @@ export function getNextPosition(currentPosition, direction) {
 	});
 }
 
+export function eraseLastSegment(snakeBody) {
+	return snakeBody.shift();
+}
+
+export function move(snakeBody, direction) {
+	return grow(eraseLastSegment(snakeBody), direction);
+}
+
+export function grow(snakeBody, direction) {
+	let newPosition = getNextPosition(
+		snakeBody.last(), direction
+	);
+
+	return snakeBody.push(newPosition);
+}
+
 export function generateGrid(width = 40, height = 40) {
 	let grid = [], x, y;
 	
