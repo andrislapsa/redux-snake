@@ -9,5 +9,6 @@ export default {
 		5
 	),
 	mainLoopTimerID: undefined,
-	foodPosition: Map({ x: 23, y: 18 })
+	foodPosition: Map({ x: 23, y: 18 }),
+    score: 0
 };

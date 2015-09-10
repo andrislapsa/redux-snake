@@ -1,4 +1,4 @@
-import { MOVE, CHANGE_DIRECTION, DIE, GROW, START_GAME, PAUSE_GAME, INIT_GAME, SPAWN_FOOD } from "./actionTypes";
+import { MOVE, CHANGE_DIRECTION, DIE, GROW, START_GAME, PAUSE_GAME, INIT_GAME, SPAWN_FOOD, INCREASE_SCORE } from "./actionTypes";
 
 export function move() {
 	return {
@@ -42,5 +42,12 @@ export function startGame(tickFn) {
 export function pauseGame() {
 	return {
 		type: PAUSE_GAME
+	}
+}
+
+export function increaseScore(amount=1) {
+	return {
+		type: INCREASE_SCORE,
+        amount
 	}
 }

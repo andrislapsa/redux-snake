@@ -30,7 +30,13 @@ export default class App extends Component {
     }
 
     render() {
-        const { snakeBody, direction, foodPosition, mainLoopTimerID } = this.props;
+        const {
+            snakeBody,
+            direction,
+            foodPosition,
+            mainLoopTimerID,
+            score
+        } = this.props;
 
         let grid = generateGrid();
 
@@ -77,6 +83,7 @@ export default class App extends Component {
                 >
                     Pause game
                 </button>
+                Score: {score}
             </div>
         );
     }
@@ -91,7 +98,8 @@ function selectStateParts(state) {
         direction: state.get("direction"),
         snakeBody: state.get("snakeBody"),
         foodPosition: state.get("foodPosition"),
-        mainLoopTimerID: state.get("mainLoopTimerID")
+        mainLoopTimerID: state.get("mainLoopTimerID"),
+        score: state.get("score")
     };
 }
 
