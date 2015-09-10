@@ -1,5 +1,5 @@
 import { Map } from "immutable";
-import { MOVE, CHANGE_DIRECTION, DIE, GROW, START_GAME, PAUSE_GAME } from "../actions/actionTypes";
+import { MOVE, CHANGE_DIRECTION, DIE, GROW, INIT_GAME, START_GAME, PAUSE_GAME } from "../actions/actionTypes";
 import * as snakeUtil from "../utils/snakeUtil";
 import initialState from "../initialState";
 
