@@ -49,7 +49,7 @@ export function grow(snakeBody, direction) {
 
 export function generateGrid(width = 40, height = 40) {
 	let grid = [], x, y;
-	
+
     for (x = 0; x < width; x++) {
         grid[x] = [];
         for (y = 0; y < height; y++) {
@@ -59,4 +59,31 @@ export function generateGrid(width = 40, height = 40) {
     }
 
     return grid;
+}
+
+export function positionInBody(position, snakeBody) {
+	return snakeBody.find(section => {
+		return (
+			position.get("x") === section.get("x") &&
+			position.get("y") === section.get("y")
+		)
+	})
+}
+
+export function randomFoodPosition(snakeBody, width, height) {
+	console.log("fooood", arguments);
+	let result = randomPosition(width, height);
+
+	if (positionInBody(result, snakeBody)) {
+		return randomFoodPosition.apply(null, arguments);
+	}
+
+	return result;
+}
+
+export function randomPosition(width, height) {
+	return Map({
+		x: Math.floor(Math.random() * width),
+		y: Math.floor(Math.random() * height)
+	});
 }

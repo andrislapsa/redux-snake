@@ -1,4 +1,4 @@
-import { Map } from "immutable";
+import { Map, fromJS } from "immutable";
 import { MOVE, CHANGE_DIRECTION, DIE, GROW, START_GAME, PAUSE_GAME, INIT_GAME, SPAWN_FOOD } from "../actions/actionTypes";
 import * as snakeUtil from "../utils/snakeUtil";
 import initialState from "../initialState";
@@ -27,7 +27,7 @@ export function initGame(state, action) {
 		return state;
 	}
 
-	return state.merge(Map(initialState));
+	return state.merge(fromJS(initialState));
 }
 
 export function startGame(state, action) {
@@ -56,9 +56,11 @@ export function grow(state, action) {
 
 export function spawnFood(state, action) {
     if (action.type === SPAWN_FOOD) {
-        return state.set("foodPosition", Map({
-            x: 5, y: 9
-        }));
+        return state.set("foodPosition", snakeUtil.randomFoodPosition(
+            state.get("snakeBody"),
+            state.get("gridSize").get("width"),
+            state.get("gridSize").get("height")
+        ));
     }
 
     return state;

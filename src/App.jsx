@@ -30,7 +30,13 @@ export default class App extends Component {
     }
 
     render() {
-        const { snakeBody, direction, foodPosition, mainLoopTimerID } = this.props;
+        const {
+            snakeBody,
+            direction,
+            foodPosition,
+            mainLoopTimerID,
+            gridSize
+        } = this.props;
 
         let grid = generateGrid();
 
@@ -45,8 +51,8 @@ export default class App extends Component {
         grid[foodPosition.get("x")][foodPosition.get("y")] = "o";
 
         let WebGLSize = {
-            width: 400,
-            height: 400
+            width: gridSize.get("x") * 10,
+            height: gridSize.get("y") * 10
         };
 
         return (
@@ -91,7 +97,8 @@ function selectStateParts(state) {
         direction: state.get("direction"),
         snakeBody: state.get("snakeBody"),
         foodPosition: state.get("foodPosition"),
-        mainLoopTimerID: state.get("mainLoopTimerID")
+        mainLoopTimerID: state.get("mainLoopTimerID"),
+        gridSize: state.get("gridSize")
     };
 }
 

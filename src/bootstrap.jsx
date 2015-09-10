@@ -1,7 +1,7 @@
 import { createStore } from "redux";
 import React from "react";
 import { Provider } from "react-redux";
-import { Map } from "immutable";
+import { fromJS } from "immutable";
 
 import App from "./App.jsx";
 import { move, grow, changeDirection, startGame, pauseGame, initGame, spawnFood } from "./reducers/snake";
@@ -38,7 +38,7 @@ const mergedReducers = (state, action) => {
 };
 
 
-const store = createStore(mergedReducers, Map(initialState));
+const store = createStore(mergedReducers, fromJS(initialState));
 window.store = store;
 
 listenToKeys(store);
