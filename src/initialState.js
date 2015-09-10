@@ -1,3 +1,4 @@
+import { Map } from "immutable";
 import * as snakeUtil from "./utils/snakeUtil";
 
 export default {
@@ -7,5 +8,6 @@ export default {
 		"down",
 		5
 	),
-	mainLoopTimerID: undefined
+	mainLoopTimerID: undefined,
+	foodPosition: Map({ x: 23, y: 18 })
 };

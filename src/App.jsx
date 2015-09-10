@@ -30,7 +30,7 @@ export default class App extends Component {
     }
 
     render() {
-        const { snakeBody, direction, mainLoopTimerID } = this.props;
+        const { snakeBody, direction, foodPosition, mainLoopTimerID } = this.props;
 
         let grid = generateGrid();
 
@@ -41,6 +41,10 @@ export default class App extends Component {
         snakeBody.map(segment => {
             grid[segment.get("x")][segment.get("y")] = "#";
         });
+
+        grid[foodPosition.get("x")][foodPosition.get("y")] = "o";
+
+        console.log(Cube);
 
         return (
 //            <Scene camera="maincamera" width={window.innerWidth} height={window.innerHeight}>
@@ -83,6 +87,7 @@ function selectStateParts(state) {
     return {
         direction: state.get("direction"),
         snakeBody: state.get("snakeBody"),
+        foodPosition: state.get("foodPosition"),
         mainLoopTimerID: state.get("mainLoopTimerID")
     };
 }

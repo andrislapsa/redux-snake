@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import { Map } from "immutable";
 
 import App from "./App.jsx";
-import { move, changeDirection, initGame, startGame, pauseGame } from "./reducers/snake";
+import { move, grow, changeDirection, startGame, pauseGame, spawnFood } from "./reducers/snake";
 import * as snakeUtil from "./utils/snakeUtil";
 import initialState from "./initialState";
 import * as actionCreators from "./actions/actionCreators";
@@ -12,6 +12,10 @@ import * as actionCreators from "./actions/actionCreators";
 const mergedReducers = (appState, action) => {
 	return appState.withMutations(state => {
 		state = initGame(state, action);
+
+		state = spawnFood(state, action);
+
+		state = grow(state, action);
 
 		state.set(
 			"mainLoopTimerID",

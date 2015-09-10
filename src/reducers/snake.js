@@ -1,5 +1,5 @@
 import { Map } from "immutable";
-import { MOVE, CHANGE_DIRECTION, DIE, GROW, INIT_GAME, START_GAME, PAUSE_GAME } from "../actions/actionTypes";
+import { MOVE, CHANGE_DIRECTION, DIE, GROW, START_GAME, PAUSE_GAME, SPAWN_FOOD } from "../actions/actionTypes";
 import * as snakeUtil from "../utils/snakeUtil";
 import initialState from "../initialState";
 
@@ -43,6 +43,27 @@ export function startGame(state, action) {
 	return window.setInterval(action.tickFn, 200);
 }
 
+export function grow(state, action) {
+    if (action.type === GROW) {
+        return state.set(
+            "snakeBody",
+            snakeUtil.grow(state.get("snakeBody"), state.get("direction"))
+        );
+    };
+
+    return state;
+}
+
+export function spawnFood(state, action) {
+    if (action.type === SPAWN_FOOD) {
+        return state.set("foodPosition", Map({
+            x: 5, y: 9
+        }));
+    }
+
+    return state;
+}
+
 export function pauseGame(state, action) {
     if (action.type !== PAUSE_GAME) {
         return state;
@@ -51,5 +72,5 @@ export function pauseGame(state, action) {
     window.clearTimeout(state);
 
     // remove obsolete timerID from state
-	return undefined;
+    return undefined;
 }

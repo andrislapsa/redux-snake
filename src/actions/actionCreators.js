@@ -1,4 +1,4 @@
-import { MOVE, CHANGE_DIRECTION, DIE, GROW, INIT_GAME, START_GAME, PAUSE_GAME } from "./actionTypes";
+import { MOVE, CHANGE_DIRECTION, DIE, GROW, START_GAME, PAUSE_GAME, SPAWN_FOOD } from "./actionTypes";
 
 export function move() {
 	return {

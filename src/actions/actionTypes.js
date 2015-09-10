@@ -5,3 +5,4 @@ export const GROW = 'GROW';
 export const INIT_GAME = 'INIT_GAME';
 export const START_GAME = 'START_GAME';
 export const PAUSE_GAME = 'PAUSE_GAME';
+export const SPAWN_FOOD = 'SPAWN_FOOD';
