@@ -9,8 +9,8 @@ export default class Camera extends Component {
             aspect: this.props.width / this.props.height,
             near: 1,
             far: 5000,
-            position: new THREE.Vector3(0, 0, 20),
-            lookat: new THREE.Vector3(0, 0, 0)
+            position: new THREE.Vector3(20, 20, 50),
+            lookat: new THREE.Vector3(20, 20, 0)
         };
 
         return (
