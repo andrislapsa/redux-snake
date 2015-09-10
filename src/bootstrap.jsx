@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import { fromJS } from "immutable";
 
 import App from "./App.jsx";
-import { move, grow, changeDirection, startGame, pauseGame, initGame, spawnFood } from "./reducers/snake";
+import { move, grow, changeDirection, startGame, pauseGame, initGame, spawnFood, increaseScore } from "./reducers/snake";
 import * as snakeUtil from "./utils/snakeUtil";
 import initialState from "./initialState";
 import * as actionCreators from "./actions/actionCreators";
@@ -33,6 +33,8 @@ const mergedReducers = (state, action) => {
         "direction",
         changeDirection(state.get("direction"), action)
     );
+
+    state = state.set("score", increaseScore(state.get("score"), action));
 
     return state;
 };

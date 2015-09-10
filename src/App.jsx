@@ -36,6 +36,7 @@ export default class App extends Component {
             direction,
             foodPosition,
             mainLoopTimerID,
+            score,
             gridSize
         } = this.props;
 
@@ -85,6 +86,7 @@ export default class App extends Component {
                 >
                     Pause game
                 </button>
+                Score: {score}
             </div>
         );
     }
@@ -100,6 +102,7 @@ function selectStateParts(state) {
         snakeBody: state.get("snakeBody"),
         foodPosition: state.get("foodPosition"),
         mainLoopTimerID: state.get("mainLoopTimerID"),
+        score: state.get("score"),
         gridSize: state.get("gridSize")
     };
 }

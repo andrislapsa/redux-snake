@@ -1,5 +1,5 @@
+import { MOVE, CHANGE_DIRECTION, DIE, GROW, START_GAME, PAUSE_GAME, INIT_GAME, SPAWN_FOOD, INCREASE_SCORE } from "../actions/actionTypes";
 import { Map, fromJS } from "immutable";
-import { MOVE, CHANGE_DIRECTION, DIE, GROW, START_GAME, PAUSE_GAME, INIT_GAME, SPAWN_FOOD } from "../actions/actionTypes";
 import * as snakeUtil from "../utils/snakeUtil";
 import initialState from "../initialState";
 
@@ -75,4 +75,12 @@ export function pauseGame(state, action) {
 
     // remove obsolete timerID from state
     return undefined;
+}
+
+export function increaseScore(state, action) {
+    if (action.type !== INCREASE_SCORE) {
+        return state;
+    }
+
+    return state + action.amount;
 }
