@@ -1,16 +1,21 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import { connect } from "react-redux";
-
-
+import { Range } from "immutable";
+import { generateGrid } from "./utils/snakeUtil";
 
 export default class App extends Component {
     render() {
         const { snakeBody, direction } = this.props;
 
+        let grid = generateGrid();
+        snakeBody.map(segment => {
+            grid[segment.get("x")][segment.get("y")] = "#";
+        });
+
         return (
-            <div>
-                heijā
-            </div>
+            <pre style={{lineHeight: "8px"}}>
+                {grid}
+            </pre>
         );
     }
 }

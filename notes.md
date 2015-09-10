@@ -12,7 +12,7 @@
 
 # SnakeView Structure:
 ```
-<Part position={this.props.position} />
+<Segment position={this.props.position} />
 ```
 
 # Actions:

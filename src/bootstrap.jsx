@@ -5,6 +5,7 @@ import { Map } from "immutable";
 
 import App from "./App.jsx";
 import { changeDirection } from "./reducers/snake";
+import * as snakeUtil from "./utils/snakeUtil";
 
 const mergedReducers = (appState, action) => {
 	return appState.withMutations(state => {
@@ -17,7 +18,15 @@ const mergedReducers = (appState, action) => {
 	});
 };
 
-const store = createStore(mergedReducers, Map());
+const initialState = {
+	direction: "down",
+	snakeBody: snakeUtil.addMultipleSegments(
+		{ x: 5, y: 5 },
+		"down",
+		5
+	)
+};
+const store = createStore(mergedReducers, Map(initialState));
 window.store = store;
 
 
