@@ -43,7 +43,7 @@ const mergedReducers = (appState, action) => {
 const store = createStore(mergedReducers, Map(initialState));
 window.store = store;
 
-listenToKeys(store.dispatch);
+listenToKeys(store);
 
 
 let rootEl = document.querySelector("#root");

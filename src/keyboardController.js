@@ -1,7 +1,18 @@
 import { changeDirection } from "./actions/actionCreators";
 
 
-export function listenToKeys(dispatch) {
+function isValidKeystroke(currentDirection, newDirection) {
+    const invalidKeystrokes = {
+        down: "up",
+        up: "down",
+        left: "right",
+        right: "left"
+    };
+
+    return invalidKeystrokes[currentDirection] !== newDirection;
+}
+
+export function listenToKeys(store) {
     document.onkeydown = function(e) {
         let direction;
         switch (e.keyCode) {
@@ -23,7 +34,9 @@ export function listenToKeys(dispatch) {
             e.preventDefault();
         }
 
-        dispatch(changeDirection(direction));
+        if (isValidKeystroke(store.getState().get("direction"), direction)) {
+            store.dispatch(changeDirection(direction));
+        }
     };
 }
 
