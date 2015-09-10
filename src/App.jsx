@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Range } from "immutable";
 import { generateGrid } from "./utils/snakeUtil";
+import Cube from "./components/Cube";
 
 export default class App extends Component {
     render() {
@@ -12,10 +13,13 @@ export default class App extends Component {
             grid[segment.get("x")][segment.get("y")] = "#";
         });
 
+        console.log(Cube);
+
         return (
-            <pre style={{lineHeight: "8px"}}>
-                {grid}
-            </pre>
+            <Cube width={window.innerWidth} height={window.innerHeight} cameraAngle={0}></Cube>
+            //<pre style={{lineHeight: "8px"}}>
+            //    {grid}
+            //</pre>
         );
     }
 }

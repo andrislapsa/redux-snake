@@ -48,6 +48,8 @@
     "immutable": "^3.7.5",
     "react": "^0.13.0",
     "react-redux": "^2.1.1",
-    "redux": "^2.0.0"
+    "react-three": "^0.6.2",
+    "redux": "^2.0.0",
+    "three": "^0.70.1"
   }
 }
