@@ -8,6 +8,7 @@ import { move, grow, changeDirection, startGame, pauseGame, initGame, spawnFood 
 import * as snakeUtil from "./utils/snakeUtil";
 import initialState from "./initialState";
 import * as actionCreators from "./actions/actionCreators";
+import { listenToKeys } from "./keyboardController";
 
 const mergedReducers = (appState, action) => {
 	return appState.withMutations(state => {
@@ -41,6 +42,8 @@ const mergedReducers = (appState, action) => {
 
 const store = createStore(mergedReducers, Map(initialState));
 window.store = store;
+
+listenToKeys(store.dispatch);
 
 
 let rootEl = document.querySelector("#root");
