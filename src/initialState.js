@@ -6,5 +6,6 @@ export default {
 		{ x: 5, y: 5 },
 		"down",
 		5
-	)
+	),
+	mainLoopTimer: undefined
 };

@@ -1,12 +1,12 @@
 import { Map } from "immutable";
-import { MOVE, CHANGE_DIRECTION, DIE, GROW, START_GAME } from "../actions/actionTypes";
+import { MOVE, CHANGE_DIRECTION, DIE, GROW, START_GAME, PAUSE_GAME } from "../actions/actionTypes";
 import * as snakeUtil from "../utils/snakeUtil";
 import initialState from "../initialState";
 
 export function move(state, action) {
 	if (action.type === MOVE) {
 		return state.set(
-			"snakeBody", 
+			"snakeBody",
 			snakeUtil.move(state.get("snakeBody"), state.get("direction"))
 		);
 	};
@@ -23,7 +23,7 @@ export function changeDirection(state, action) {
 }
 
 export function initGame(state, action) {
-	if (action.type !== START_GAME) {
+	if (action.type !== INIT_GAME) {
 		return state;
 	}
 
@@ -31,7 +31,26 @@ export function initGame(state, action) {
 }
 
 export function startGame(state, action) {
-	return state.set();
+    if (action.type !== START_GAME) {
+        return state;
+    }
+
+	return state.set(
+		"mainLoopTimerID",
+		window.setInterval(action.tickFn, 200)
+	);
 }
 
+export function pauseGame(state, action) {
+    if (action.type !== PAUSE_GAME) {
+        return state;
+    }
 
+    let timerID = state.get("mainLoopTimerID");
+    window.clearTimeout(timerID);
+
+	return state.set(
+		"mainLoopTimerID",
+		undefined
+	);
+}

@@ -1,4 +1,4 @@
-import { MOVE, CHANGE_DIRECTION, DIE, GROW, START_GAME } from "./actionTypes";
+import { MOVE, CHANGE_DIRECTION, DIE, GROW, INIT_GAME, START_GAME, PAUSE_GAME } from "./actionTypes";
 
 export function move() {
 	return {
@@ -25,8 +25,22 @@ export function grow() {
 	}
 }
 
-export function startGame() {
+
+export function initGame() {
+    return {
+        type: INIT_GAME
+    }
+}
+
+export function startGame(tickFn) {
 	return {
-		type: START_GAME
+		type: START_GAME,
+        tickFn
+	}
+}
+
+export function pauseGame() {
+	return {
+		type: PAUSE_GAME
 	}
 }
