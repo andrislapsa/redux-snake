@@ -51,3 +51,9 @@ export function increaseScore(amount=1) {
         amount
 	}
 }
+
+export function spawnFood() {
+	return {
+		type: SPAWN_FOOD
+	}
+}

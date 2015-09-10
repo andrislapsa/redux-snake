@@ -61,12 +61,16 @@ export function generateGrid(width = 40, height = 40) {
     return grid;
 }
 
+export function positionsMatch(position1, position2) {
+	return (
+		position1.get("x") === position2.get("x") &&
+		position1.get("y") === position2.get("y")
+	)
+}
+
 export function positionInBody(position, snakeBody) {
 	return snakeBody.find(section => {
-		return (
-			position.get("x") === section.get("x") &&
-			position.get("y") === section.get("y")
-		)
+		return positionsMatch(position, section);
 	})
 }
 

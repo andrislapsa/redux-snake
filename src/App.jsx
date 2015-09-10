@@ -3,8 +3,8 @@ import _ from "lodash";
 import { Scene } from "react-three";
 import { connect } from "react-redux";
 import { Range } from "immutable";
-import { generateGrid } from "./utils/snakeUtil";
-import { initGame, startGame, pauseGame, move } from "./actions/actionCreators";
+import * as snakeUtil from "./utils/snakeUtil";
+import { initGame, startGame, pauseGame, move, grow, spawnFood } from "./actions/actionCreators";
 import Camera from "./components/Camera";
 import Cube from "./components/Cube";
 import Food from "./components/Food";
@@ -40,7 +40,7 @@ export default class App extends Component {
             gridSize
         } = this.props;
 
-        let grid = generateGrid();
+        let grid = snakeUtil.generateGrid();
 
         let createSection = segment => {
             return <Cube x={segment.get("x")} y={segment.get("y")} />;
@@ -94,7 +94,22 @@ export default class App extends Component {
 }
 
 function tick(dispatch) {
-    dispatch(move());
+    let state = store.getState(),
+        snakeBody = state.get("snakeBody"),
+        nextPosition = snakeUtil.getNextPosition(
+            snakeBody.last(),
+            state.get("direction")
+        ),
+        foodPosition = state.get("foodPosition");
+
+    console.log(foodPosition.toJSON(), nextPosition.toJSON(), snakeUtil.positionsMatch(nextPosition, foodPosition));
+
+    if (snakeUtil.positionsMatch(nextPosition, foodPosition)) {
+        dispatch(grow());
+        dispatch(spawnFood());
+    } else {
+        dispatch(move());
+    }
 }
 
 function selectStateParts(state) {
