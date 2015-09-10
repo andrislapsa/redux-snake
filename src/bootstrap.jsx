@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import { Map } from "immutable";
 
 import App from "./App.jsx";
-import { move, grow, changeDirection, startGame, pauseGame, spawnFood } from "./reducers/snake";
+import { move, grow, changeDirection, startGame, pauseGame, initGame, spawnFood } from "./reducers/snake";
 import * as snakeUtil from "./utils/snakeUtil";
 import initialState from "./initialState";
 import * as actionCreators from "./actions/actionCreators";
