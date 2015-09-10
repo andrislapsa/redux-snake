@@ -11,8 +11,15 @@ import * as actionCreators from "./actions/actionCreators";
 
 const mergedReducers = (appState, action) => {
 	return appState.withMutations(state => {
-		state = startGame(state, action);
-		state = pauseGame(state, action);
+		state.set(
+			"mainLoopTimerID",
+			startGame(state.get("mainLoopTimerID"), action)
+		);
+
+		state.set(
+			"mainLoopTimerID",
+			pauseGame(state.get("mainLoopTimerID"), action)
+		);
 
 		state = move(state, action);
 
@@ -35,9 +42,5 @@ React.render(
 	<Provider store={store}>
 		{ () => <App /> }
 	</Provider>,
-	rootEl,
-	() => {
-		console.log("start");
-		store.dispatch(actionCreators.startGame());
-	}
+	rootEl
 );

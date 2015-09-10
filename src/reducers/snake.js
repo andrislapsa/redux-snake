@@ -35,10 +35,12 @@ export function startGame(state, action) {
         return state;
     }
 
-	return state.set(
-		"mainLoopTimerID",
-		window.setInterval(action.tickFn, 200)
-	);
+    // Ticker is already running
+    if (typeof state !== "undefined") {
+        return state;
+    }
+
+	return window.setInterval(action.tickFn, 200);
 }
 
 export function pauseGame(state, action) {
@@ -46,11 +48,8 @@ export function pauseGame(state, action) {
         return state;
     }
 
-    let timerID = state.get("mainLoopTimerID");
-    window.clearTimeout(timerID);
+    window.clearTimeout(state);
 
-	return state.set(
-		"mainLoopTimerID",
-		undefined
-	);
+    // remove obsolete timerID from state
+	return undefined;
 }

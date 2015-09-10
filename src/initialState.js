@@ -7,5 +7,5 @@ export default {
 		"down",
 		5
 	),
-	mainLoopTimer: undefined
+	mainLoopTimerID: undefined
 };
