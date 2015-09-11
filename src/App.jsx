@@ -51,7 +51,8 @@ export default class App extends Component {
             grid[y][segment.get("x")] = "#";
         });
 
-        grid[foodPosition.get("x")][foodPosition.get("y")] = "o";
+        let foodY = gridSize.get("height") - foodPosition.get("y");
+        grid[foodY][foodPosition.get("x")] = "o";
 
         let webGLSize = {
             width: gridSize.get("width") * 10,
@@ -63,7 +64,7 @@ export default class App extends Component {
                 <Scene camera="maincamera" {...webGLSize}>
                     <Camera {...webGLSize} />
                     {snakeBody.map(createSection)}
-                    <Food x={foodPosition.get("x")} y={foodPosition.get("y")} />;
+                    <Food x={foodPosition.get("x")} y={foodPosition.get("y")} />
                 </Scene>
 
                 <pre style={{lineHeight: "8px"}}>
@@ -102,7 +103,7 @@ function tick(dispatch) {
         ),
         foodPosition = state.get("foodPosition");
 
-    console.log(foodPosition.toJSON(), nextPosition.toJSON(), snakeUtil.positionsMatch(nextPosition, foodPosition));
+    //console.log(foodPosition.toJSON(), nextPosition.toJSON(), snakeUtil.positionsMatch(nextPosition, foodPosition));
 
     if (snakeUtil.positionsMatch(nextPosition, foodPosition)) {
         dispatch(grow());
