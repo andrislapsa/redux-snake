@@ -1,4 +1,4 @@
-import ReactTHREE, {} from "react-three"
+import { Mesh } from "react-three"
 import React, {Component} from "react"
 import THREE from "three"
 
@@ -11,7 +11,7 @@ export default class Scene extends Component {
         };
 
         return (
-            <ReactTHREE.Mesh {...cubeProps} position={new THREE.Vector3(this.props.x, this.props.y, 0)}/>
+            <Mesh {...cubeProps} position={new THREE.Vector3(this.props.x, this.props.y, 0)}/>
         );
     }
 };

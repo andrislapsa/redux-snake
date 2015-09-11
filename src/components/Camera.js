@@ -1,4 +1,4 @@
-import ReactTHREE, {} from "react-three"
+import { PerspectiveCamera } from "react-three"
 import React, {Component} from "react"
 import THREE from "three"
 
@@ -24,7 +24,7 @@ export default class Camera extends Component {
         };
 
         return (
-            <ReactTHREE.PerspectiveCamera {...cameraProps} />
+            <PerspectiveCamera {...cameraProps} />
         );
     }
 };

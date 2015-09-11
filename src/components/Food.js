@@ -1,4 +1,4 @@
-import ReactTHREE, {} from "react-three"
+import { Mesh } from "react-three"
 import React, {Component} from "react"
 import THREE from "three"
 
@@ -11,7 +11,7 @@ export default class Food extends Component {
         };
 
         return (
-            <ReactTHREE.Mesh {...foodProps} position={new THREE.Vector3(this.props.x, this.props.y, 0)}/>
+            <Mesh {...foodProps} position={new THREE.Vector3(this.props.x, this.props.y, 0)}/>
         );
     }
 };
