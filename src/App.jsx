@@ -46,20 +46,21 @@ export default class App extends Component {
         };
 
         snakeBody.map(segment => {
-            grid[segment.get("x")][segment.get("y")] = "#";
+            let y = gridSize.get("height") - segment.get("y");
+            grid[y][segment.get("x")] = "#";
         });
 
         grid[foodPosition.get("x")][foodPosition.get("y")] = "o";
 
-        let WebGLSize = {
+        let webGLSize = {
             width: gridSize.get("width") * 10,
             height: gridSize.get("height") * 10
         };
 
         return (
             <div>
-                <Scene camera="maincamera" {...WebGLSize}>
-                    <Camera {...WebGLSize} />
+                <Scene camera="maincamera" {...webGLSize}>
+                    <Camera {...webGLSize} />
                     {snakeBody.map(createSection)}
                 </Scene>
 
