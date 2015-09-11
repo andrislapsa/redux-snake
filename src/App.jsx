@@ -8,6 +8,7 @@ import { initGame, startGame, pauseGame, move, grow, spawnFood } from "./actions
 import Camera from "./components/Camera";
 import Cube from "./components/Cube";
 import Food from "./components/Food";
+import CameraAdjuster from "./components/CameraAdjuster";
 
 export default class App extends Component {
     constructor() {
@@ -37,7 +38,8 @@ export default class App extends Component {
             foodPosition,
             mainLoopTimerID,
             score,
-            gridSize
+            gridSize,
+            cameraOffset
         } = this.props;
 
         let grid = snakeUtil.generateGrid();
@@ -62,10 +64,12 @@ export default class App extends Component {
         return (
             <div>
                 <Scene camera="maincamera" {...webGLSize}>
-                    <Camera {...webGLSize} />
+                    <Camera {...webGLSize} cameraOffset={cameraOffset} />
                     {snakeBody.map(createSection)}
                     <Food x={foodPosition.get("x")} y={foodPosition.get("y")} />
                 </Scene>
+
+                <CameraAdjuster dispatch={this.props.dispatch} />
 
                 <pre style={{lineHeight: "8px"}}>
                     {grid}
@@ -120,7 +124,8 @@ function selectStateParts(state) {
         foodPosition: state.get("foodPosition"),
         mainLoopTimerID: state.get("mainLoopTimerID"),
         score: state.get("score"),
-        gridSize: state.get("gridSize")
+        gridSize: state.get("gridSize"),
+        cameraOffset: state.get("cameraOffset")
     };
 }
 

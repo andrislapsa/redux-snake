@@ -1,59 +1,67 @@
-import { MOVE, CHANGE_DIRECTION, DIE, GROW, START_GAME, PAUSE_GAME, INIT_GAME, SPAWN_FOOD, INCREASE_SCORE } from "./actionTypes";
+import * as consts from "./actionTypes";
 
 export function move() {
 	return {
-		type: MOVE
+		type: consts.MOVE
 	}
 }
 
 export function changeDirection(direction) {
 	return {
-		type: CHANGE_DIRECTION,
+		type: consts.CHANGE_DIRECTION,
 		direction
 	}
 }
 
 export function die() {
 	return {
-		type: DIE
+		type: consts.DIE
 	}
 }
 
 export function grow() {
 	return {
-		type: GROW
+		type: consts.GROW
 	}
 }
 
 
 export function initGame() {
     return {
-        type: INIT_GAME
+        type: consts.INIT_GAME
     }
 }
 
 export function startGame(tickFn) {
 	return {
-		type: START_GAME,
+		type: consts.START_GAME,
         tickFn
 	}
 }
 
 export function pauseGame() {
 	return {
-		type: PAUSE_GAME
+		type: consts.PAUSE_GAME
 	}
 }
 
 export function increaseScore(amount=1) {
 	return {
-		type: INCREASE_SCORE,
+		type: consts.INCREASE_SCORE,
         amount
 	}
 }
 
 export function spawnFood() {
 	return {
-		type: SPAWN_FOOD
+		type: consts.SPAWN_FOOD
+	}
+}
+
+export function adjustCamera(axis, offset) {
+	return {
+		type: consts.ADJUST_CAMERA,
+		axis,
+		offset
 	}
 }

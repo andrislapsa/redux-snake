@@ -11,5 +11,6 @@ export default {
 	mainLoopTimerID: undefined,
     score: 0,
 	foodPosition: { x: 23, y: 18 },
-	gridSize: { width: 40, height: 40 }
+	gridSize: { width: 40, height: 40 },
+	cameraOffset: { x: 0, y: 0, z: 0 }
 };

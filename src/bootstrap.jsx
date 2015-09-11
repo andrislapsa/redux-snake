@@ -4,37 +4,45 @@ import { Provider } from "react-redux";
 import { fromJS } from "immutable";
 
 import App from "./App.jsx";
-import { move, grow, changeDirection, startGame, pauseGame, initGame, spawnFood, increaseScore } from "./reducers/snake";
+import * as reducer from "./reducers/snake";
 import * as snakeUtil from "./utils/snakeUtil";
 import initialState from "./initialState";
 import * as actionCreators from "./actions/actionCreators";
 import { listenToKeys } from "./keyboardController";
 
 const mergedReducers = (state, action) => {
-    state = initGame(state, action);
+    state = reducer.initGame(state, action);
 
-    state = spawnFood(state, action);
+    state = reducer.spawnFood(state, action);
 
-    state = grow(state, action);
+    state = reducer.grow(state, action);
 
     state = state.set(
         "mainLoopTimerID",
-        startGame(state.get("mainLoopTimerID"), action)
+        reducer.startGame(state.get("mainLoopTimerID"), action)
     );
 
     state = state.set(
         "mainLoopTimerID",
-        pauseGame(state.get("mainLoopTimerID"), action)
+        reducer.pauseGame(state.get("mainLoopTimerID"), action)
     );
 
-    state = move(state, action);
+    state = reducer.move(state, action);
 
     state = state.set(
         "direction",
-        changeDirection(state.get("direction"), action)
+        reducer.changeDirection(state.get("direction"), action)
     );
 
-    state = state.set("score", increaseScore(state.get("score"), action));
+    state = state.set(
+        "score",
+        reducer.increaseScore(state.get("score"), action)
+    );
+
+    state = state.set(
+        "cameraOffset",
+        reducer.handleCameraChanges(state.get("cameraOffset"), action)
+    );
 
     return state;
 };

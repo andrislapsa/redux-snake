@@ -1,10 +1,10 @@
-import { MOVE, CHANGE_DIRECTION, DIE, GROW, START_GAME, PAUSE_GAME, INIT_GAME, SPAWN_FOOD, INCREASE_SCORE } from "../actions/actionTypes";
+import * as consts from "../actions/actionTypes";
 import { Map, fromJS } from "immutable";
 import * as snakeUtil from "../utils/snakeUtil";
 import initialState from "../initialState";
 
 export function move(state, action) {
-	if (action.type === MOVE) {
+	if (action.type === consts.MOVE) {
 		return state.set(
 			"snakeBody",
 			snakeUtil.move(state.get("snakeBody"), state.get("direction"))
@@ -15,7 +15,7 @@ export function move(state, action) {
 }
 
 export function changeDirection(state, action) {
-	if (action.type === CHANGE_DIRECTION) {
+	if (action.type === consts.CHANGE_DIRECTION) {
 		return action.direction;
 	}
 
@@ -23,7 +23,7 @@ export function changeDirection(state, action) {
 }
 
 export function initGame(state, action) {
-	if (action.type !== INIT_GAME) {
+	if (action.type !== consts.INIT_GAME) {
 		return state;
 	}
 
@@ -31,7 +31,7 @@ export function initGame(state, action) {
 }
 
 export function startGame(state, action) {
-    if (action.type !== START_GAME) {
+    if (action.type !== consts.START_GAME) {
         return state;
     }
 
@@ -44,7 +44,7 @@ export function startGame(state, action) {
 }
 
 export function grow(state, action) {
-    if (action.type === GROW) {
+    if (action.type === consts.GROW) {
         return state.set(
             "snakeBody",
             snakeUtil.grow(state.get("snakeBody"), state.get("direction"))
@@ -55,7 +55,7 @@ export function grow(state, action) {
 }
 
 export function spawnFood(state, action) {
-    if (action.type === SPAWN_FOOD) {
+    if (action.type === consts.SPAWN_FOOD) {
         return state.set("foodPosition", snakeUtil.randomFoodPosition(
             state.get("snakeBody"),
             state.get("gridSize").get("width"),
@@ -67,7 +67,7 @@ export function spawnFood(state, action) {
 }
 
 export function pauseGame(state, action) {
-    if (action.type !== PAUSE_GAME) {
+    if (action.type !== consts.PAUSE_GAME) {
         return state;
     }
 
@@ -78,9 +78,18 @@ export function pauseGame(state, action) {
 }
 
 export function increaseScore(state, action) {
-    if (action.type !== INCREASE_SCORE) {
+    if (action.type !== consts.INCREASE_SCORE) {
         return state;
     }
 
     return state + action.amount;
+}
+
+export function handleCameraChanges(state, action) {
+    if (action.type === consts.ADJUST_CAMERA) {
+        return state.set(action.axis, action.offset);
+        //console.log("aaa", state.toJSON(), action);
+    }
+
+    return state;
 }
