@@ -7,6 +7,7 @@ import { generateGrid } from "./utils/snakeUtil";
 import { initGame, startGame, pauseGame, move } from "./actions/actionCreators";
 import Camera from "./components/Camera";
 import Cube from "./components/Cube";
+import Food from "./components/Food";
 
 export default class App extends Component {
     constructor() {
@@ -62,6 +63,7 @@ export default class App extends Component {
                 <Scene camera="maincamera" {...webGLSize}>
                     <Camera {...webGLSize} />
                     {snakeBody.map(createSection)}
+                    <Food x={foodPosition.get("x")} y={foodPosition.get("y")} />;
                 </Scene>
 
                 <pre style={{lineHeight: "8px"}}>

@@ -7,7 +7,7 @@ export default class Scene extends Component {
         let cubeProps = {
             geometry: new THREE.BoxGeometry( 0.8, 0.8, 0.8 ),
             material: new THREE.MeshBasicMaterial( { color: 0xff4433 } ),
-            scale: new THREE.Vector3(1, 1, -1)
+            scale: new THREE.Vector3(1, 1, 1)
         };
 
         return (
