@@ -88,9 +88,9 @@ export function increaseSpeed(state, action) {
     return state - action.amount;
 }
 
-export function handleCameraChanges(state, action) {
-    if (action.type === consts.ADJUST_CAMERA) {
-        return state.set(action.axis, action.offset);
+export function decreaseCameraOffsetZ(state, action) {
+    if (action.type === consts.DECREASE_CAMERA_Z) {
+        return state - action.amount;
     }
 
     return state;

@@ -12,7 +12,7 @@ export default {
 	isGameStarted: false, // false when just initialized
 	isGamePaused: false,
     score: 0,
-	foodPosition: { x: 23, y: 18 },
+	foodPosition: { x: 0, y: 0 },
 	gridSize: { width: 40, height: 40 },
-	cameraOffset: { x: 0, y: 0, z: 0 }
+	cameraOffsetZ: 30
 };

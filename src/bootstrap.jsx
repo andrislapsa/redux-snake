@@ -42,8 +42,8 @@ const mergedReducers = (state, action) => {
     );
 
     state = state.set(
-        "cameraOffset",
-        reducer.handleCameraChanges(state.get("cameraOffset"), action)
+        "cameraOffsetZ",
+        reducer.decreaseCameraOffsetZ(state.get("cameraOffsetZ"), action)
     );
 
     return state;
@@ -77,6 +77,7 @@ function tick(store) {
         dispatch(actionCreators.increaseSpeed());
         dispatch(actionCreators.grow());
         dispatch(actionCreators.spawnFood());
+        dispatch(actionCreators.decreaseCameraOffsetZ());
     } else {
         dispatch(actionCreators.move());
     }

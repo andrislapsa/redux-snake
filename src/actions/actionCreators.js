@@ -64,10 +64,9 @@ export function spawnFood() {
 	}
 }
 
-export function adjustCamera(axis, offset) {
+export function decreaseCameraOffsetZ(amount=0.5) {
 	return {
-		type: consts.ADJUST_CAMERA,
-		axis,
-		offset
+		type: consts.DECREASE_CAMERA_Z,
+		amount
 	}
 }

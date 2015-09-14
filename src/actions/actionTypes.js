@@ -8,4 +8,4 @@ export const PAUSE_GAME = 'PAUSE_GAME';
 export const SPAWN_FOOD = 'SPAWN_FOOD';
 export const INCREASE_SCORE = 'INCREASE_SCORE';
 export const INCREASE_SPEED = 'INCREASE_SPEED';
-export const ADJUST_CAMERA = 'ADJUST_CAMERA';
+export const DECREASE_CAMERA_Z = 'DECREASE_CAMERA_Z';

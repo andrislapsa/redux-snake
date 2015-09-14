@@ -6,6 +6,7 @@ import { Range } from "immutable";
 import * as snakeUtil from "./utils/snakeUtil";
 import { initGame, startGame, pauseGame, move, grow, spawnFood } from "./actions/actionCreators";
 import Camera from "./components/Camera";
+import Plane from "./components/Plane";
 import Cube from "./components/Cube";
 import Food from "./components/Food";
 import CameraAdjuster from "./components/CameraAdjuster";
@@ -37,16 +38,28 @@ export default class App extends Component {
         );
     }
 
+    worldToScreenSize(obj) {
+        return _.mapValues(obj, function(val) {
+            return val * 10;
+        });
+    }
+
     renderWebGL() {
         let size = {
-            width: this.props.gridSize.get("width") * 10,
-            height: this.props.gridSize.get("height") * 10
+            width: this.props.gridSize.get("width"),
+            height: this.props.gridSize.get("height")
         };
 
         return (
             <div>
-                <Scene camera="maincamera" {...size}>
-                    <Camera {...size} cameraOffset={this.props.cameraOffset} />
+                <Scene camera="maincamera" {...this.worldToScreenSize(size)}>
+                    <Plane {...size} />
+                    <Camera
+                        {...size}
+                        cameraOffsetZ={this.props.cameraOffsetZ}
+                        cameraLookAtOffsetX={this.props.snakeBody.last().get("x")}
+                        cameraLookAtOffsetY={this.props.snakeBody.last().get("y")}
+                    />
                     {this.props.snakeBody.map(this.renderWebGLSection)}
                     <Food
                         x={this.props.foodPosition.get("x")}
@@ -112,7 +125,7 @@ function selectStateParts(state) {
         gridSize: state.get("gridSize"),
         isGamePaused: state.get("isGamePaused"),
         isGameStarted: state.get("isGameStarted"),
-        cameraOffset: state.get("cameraOffset")
+        cameraOffsetZ: state.get("cameraOffsetZ")
     };
 }
 
