@@ -20,11 +20,11 @@ export default class App extends Component {
 
     _onGameNewStartClick() {
         this.props.dispatch(initGame());
-        this.props.dispatch(startGame(_.partial(tick, this.props.dispatch)));
+        this.props.dispatch(startGame());
     }
 
     _onGameStartClick() {
-        this.props.dispatch(startGame(_.partial(tick, this.props.dispatch)));
+        this.props.dispatch(startGame());
     }
 
     _onGamePauseClick() {
@@ -36,7 +36,8 @@ export default class App extends Component {
             snakeBody,
             direction,
             foodPosition,
-            mainLoopTimerID,
+            isGameStarted,
+            isGamePaused,
             score,
             gridSize,
             cameraOffset
@@ -76,19 +77,19 @@ export default class App extends Component {
                 </pre>
                 <button
                     onClick={this._onGameNewStartClick}
-                    disabled={mainLoopTimerID?"disabled":""}
+                    disabled={isGameStarted?"disabled":""}
                 >
                     Start new game
                 </button>
                 <button
                     onClick={this._onGameStartClick}
-                    disabled={mainLoopTimerID?"disabled":""}
+                    disabled={isGamePaused?"":"disabled"}
                 >
                     Start game
                 </button>
                 <button
                     onClick={this._onGamePauseClick}
-                    disabled={mainLoopTimerID?"":"disabled"}
+                    disabled={isGamePaused?"disabled":""}
                 >
                     Pause game
                 </button>
@@ -98,33 +99,15 @@ export default class App extends Component {
     }
 }
 
-function tick(dispatch) {
-    let state = store.getState(),
-        snakeBody = state.get("snakeBody"),
-        nextPosition = snakeUtil.getNextPosition(
-            snakeBody.last(),
-            state.get("direction")
-        ),
-        foodPosition = state.get("foodPosition");
-
-    //console.log(foodPosition.toJSON(), nextPosition.toJSON(), snakeUtil.positionsMatch(nextPosition, foodPosition));
-
-    if (snakeUtil.positionsMatch(nextPosition, foodPosition)) {
-        dispatch(grow());
-        dispatch(spawnFood());
-    } else {
-        dispatch(move());
-    }
-}
-
 function selectStateParts(state) {
     return {
         direction: state.get("direction"),
         snakeBody: state.get("snakeBody"),
         foodPosition: state.get("foodPosition"),
-        mainLoopTimerID: state.get("mainLoopTimerID"),
         score: state.get("score"),
         gridSize: state.get("gridSize"),
+        isGamePaused: state.get("isGamePaused"),
+        isGameStarted: state.get("isGameStarted"),
         cameraOffset: state.get("cameraOffset")
     };
 }

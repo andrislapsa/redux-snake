@@ -17,14 +17,11 @@ const mergedReducers = (state, action) => {
 
     state = reducer.grow(state, action);
 
-    state = state.set(
-        "mainLoopTimerID",
-        reducer.startGame(state.get("mainLoopTimerID"), action)
-    );
+    state = reducer.startGame(state, action);
 
     state = state.set(
-        "mainLoopTimerID",
-        reducer.pauseGame(state.get("mainLoopTimerID"), action)
+        "isGamePaused",
+        reducer.pauseGame(state.get("isGamePaused"), action)
     );
 
     state = reducer.move(state, action);
@@ -51,7 +48,36 @@ const mergedReducers = (state, action) => {
 const store = createStore(mergedReducers, fromJS(initialState));
 window.store = store;
 
+
+function tick(store) {
+    const dispatch = store.dispatch;
+    let state = store.getState();
+
+    // Create next tick
+    setTimeout(() => { tick(store) }, state.get("speed"));
+
+    if (!state.get("isGameStarted") || state.get("isGamePaused")) {
+        return;
+    }
+
+    let snakeBody = state.get("snakeBody"),
+        nextPosition = snakeUtil.getNextPosition(
+            snakeBody.last(),
+            state.get("direction")
+        ),
+        foodPosition = state.get("foodPosition");
+
+    if (snakeUtil.positionsMatch(nextPosition, foodPosition)) {
+        dispatch(actionCreators.grow());
+        dispatch(actionCreators.spawnFood());
+    } else {
+        dispatch(actionCreators.move());
+    }
+}
+
+
 listenToKeys(store);
+tick(store);
 
 
 let rootEl = document.querySelector("#root");

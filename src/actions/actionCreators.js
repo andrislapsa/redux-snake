@@ -32,10 +32,9 @@ export function initGame() {
     }
 }
 
-export function startGame(tickFn) {
+export function startGame() {
 	return {
-		type: consts.START_GAME,
-        tickFn
+		type: consts.START_GAME
 	}
 }
 

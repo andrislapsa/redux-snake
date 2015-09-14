@@ -8,7 +8,9 @@ export default {
 		"down",
 		5
 	),
-	mainLoopTimerID: undefined,
+	speed: 300, // ms per tick
+	isGameStarted: false, // false when just initialized
+	isGamePaused: false,
     score: 0,
 	foodPosition: { x: 23, y: 18 },
 	gridSize: { width: 40, height: 40 },

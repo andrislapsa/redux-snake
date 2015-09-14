@@ -9,7 +9,7 @@ export function move(state, action) {
 			"snakeBody",
 			snakeUtil.move(state.get("snakeBody"), state.get("direction"))
 		);
-	};
+	}
 
 	return state;
 }
@@ -35,12 +35,18 @@ export function startGame(state, action) {
         return state;
     }
 
-    // Ticker is already running
-    if (typeof state !== "undefined") {
+    return state.withMutations((state) => {
+        state.set("isGamePaused", false);
+        state.set("isGameStarted", true);
+    });
+}
+
+export function pauseGame(state, action) {
+    if (action.type !== consts.PAUSE_GAME) {
         return state;
     }
 
-	return window.setInterval(action.tickFn, 200);
+    return true;
 }
 
 export function grow(state, action) {
@@ -49,7 +55,7 @@ export function grow(state, action) {
             "snakeBody",
             snakeUtil.grow(state.get("snakeBody"), state.get("direction"))
         );
-    };
+    }
 
     return state;
 }
@@ -66,17 +72,6 @@ export function spawnFood(state, action) {
     return state;
 }
 
-export function pauseGame(state, action) {
-    if (action.type !== consts.PAUSE_GAME) {
-        return state;
-    }
-
-    window.clearTimeout(state);
-
-    // remove obsolete timerID from state
-    return undefined;
-}
-
 export function increaseScore(state, action) {
     if (action.type !== consts.INCREASE_SCORE) {
         return state;
@@ -88,7 +83,6 @@ export function increaseScore(state, action) {
 export function handleCameraChanges(state, action) {
     if (action.type === consts.ADJUST_CAMERA) {
         return state.set(action.axis, action.offset);
-        //console.log("aaa", state.toJSON(), action);
     }
 
     return state;
