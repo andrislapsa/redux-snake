@@ -31,69 +31,73 @@ export default class App extends Component {
         this.props.dispatch(pauseGame());
     }
 
-    render() {
-        const {
-            snakeBody,
-            direction,
-            foodPosition,
-            isGameStarted,
-            isGamePaused,
-            score,
-            gridSize,
-            cameraOffset
-        } = this.props;
+    renderWebGLSection(segment) {
+        return (
+            <Cube x={segment.get("x")} y={segment.get("y")} />
+        );
+    }
 
-        let grid = snakeUtil.generateGrid();
-
-        let createSection = segment => {
-            return <Cube x={segment.get("x")} y={segment.get("y")} />;
-        };
-
-        snakeBody.map(segment => {
-            let y = gridSize.get("height") - segment.get("y");
-            grid[y][segment.get("x")] = "#";
-        });
-
-        let foodY = gridSize.get("height") - foodPosition.get("y");
-        grid[foodY][foodPosition.get("x")] = "o";
-
-        let webGLSize = {
-            width: gridSize.get("width") * 10,
-            height: gridSize.get("height") * 10
+    renderWebGL() {
+        let size = {
+            width: this.props.gridSize.get("width") * 10,
+            height: this.props.gridSize.get("height") * 10
         };
 
         return (
             <div>
-                <Scene camera="maincamera" {...webGLSize}>
-                    <Camera {...webGLSize} cameraOffset={cameraOffset} />
-                    {snakeBody.map(createSection)}
-                    <Food x={foodPosition.get("x")} y={foodPosition.get("y")} />
+                <Scene camera="maincamera" {...size}>
+                    <Camera {...size} cameraOffset={this.props.cameraOffset} />
+                    {this.props.snakeBody.map(this.renderWebGLSection)}
+                    <Food
+                        x={this.props.foodPosition.get("x")}
+                        y={this.props.foodPosition.get("y")}
+                    />
                 </Scene>
-
                 <CameraAdjuster dispatch={this.props.dispatch} />
+            </div>
+        );
+    }
 
-                <pre style={{lineHeight: "8px"}}>
-                    {grid}
-                </pre>
+    renderText() {
+        let grid = snakeUtil.generateGrid();
+        this.props.snakeBody.map(segment => {
+            let y = this.props.gridSize.get("height") - segment.get("y");
+            grid[y][segment.get("x")] = "#";
+        });
+        let foodY = this.props.gridSize.get("height")
+            - this.props.foodPosition.get("y");
+        grid[foodY][this.props.foodPosition.get("x")] = "o";
+
+        return (
+            <pre style={{lineHeight: "8px"}}>
+                {grid}
+            </pre>
+        );
+    }
+
+    render() {
+        return (
+            <div>
+                {this.renderWebGL()}
                 <button
                     onClick={this._onGameNewStartClick}
-                    disabled={isGameStarted?"disabled":""}
-                >
+                    disabled={this.props.isGameStarted?"disabled":""}
+                    >
                     Start new game
                 </button>
                 <button
                     onClick={this._onGameStartClick}
-                    disabled={isGamePaused?"":"disabled"}
-                >
+                    disabled={this.props.isGamePaused?"":"disabled"}
+                    >
                     Start game
                 </button>
                 <button
                     onClick={this._onGamePauseClick}
-                    disabled={isGamePaused?"disabled":""}
-                >
+                    disabled={this.props.isGamePaused?"disabled":""}
+                    >
                     Pause game
                 </button>
-                Score: {score}
+                Score: {this.props.score}
             </div>
         );
     }
