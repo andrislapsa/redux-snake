@@ -80,6 +80,14 @@ export function increaseScore(state, action) {
     return state + action.amount;
 }
 
+export function increaseSpeed(state, action) {
+    if (action.type !== consts.INCREASE_SPEED) {
+        return state;
+    }
+
+    return state - action.amount;
+}
+
 export function handleCameraChanges(state, action) {
     if (action.type === consts.ADJUST_CAMERA) {
         return state.set(action.axis, action.offset);

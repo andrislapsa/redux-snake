@@ -37,6 +37,11 @@ const mergedReducers = (state, action) => {
     );
 
     state = state.set(
+        "speed",
+        reducer.increaseSpeed(state.get("speed"), action)
+    );
+
+    state = state.set(
         "cameraOffset",
         reducer.handleCameraChanges(state.get("cameraOffset"), action)
     );
@@ -68,6 +73,8 @@ function tick(store) {
         foodPosition = state.get("foodPosition");
 
     if (snakeUtil.positionsMatch(nextPosition, foodPosition)) {
+        dispatch(actionCreators.increaseScore());
+        dispatch(actionCreators.increaseSpeed());
         dispatch(actionCreators.grow());
         dispatch(actionCreators.spawnFood());
     } else {

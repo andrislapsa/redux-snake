@@ -75,7 +75,6 @@ export function positionInBody(position, snakeBody) {
 }
 
 export function randomFoodPosition(snakeBody, width, height) {
-	console.log("fooood", arguments);
 	let result = randomPosition(width, height);
 
 	if (positionInBody(result, snakeBody)) {

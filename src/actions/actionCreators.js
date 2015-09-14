@@ -51,6 +51,13 @@ export function increaseScore(amount=1) {
 	}
 }
 
+export function increaseSpeed(amount=5) {
+	return {
+		type: consts.INCREASE_SPEED,
+        amount
+	}
+}
+
 export function spawnFood() {
 	return {
 		type: consts.SPAWN_FOOD
