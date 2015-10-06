@@ -3,6 +3,8 @@ var express = require('express');
 var webpack = require('webpack');
 var config = require('./webpack.config');
 
+config.entry.unshift("webpack-hot-middleware/client");
+
 var app = express();
 var compiler = webpack(config);
 

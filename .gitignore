@@ -3,3 +3,4 @@ npm-debug.log
 .DS_Store
 .idea/**
 snake-react-canvas.iml
+dist/
