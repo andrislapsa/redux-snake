@@ -2,6 +2,11 @@ import { changeDirection } from "./actions/actionCreators";
 
 
 function isValidKeystroke(currentDirection, newDirection) {
+    if (!newDirection) {
+        return false;
+    }
+
+    // don't allow 180 degree direction change
     const invalidKeystrokes = {
         down: "up",
         up: "down",
