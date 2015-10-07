@@ -1,5 +1,5 @@
-# snake-react-canvas
-Simple snake game written using React Canvas and Redux.
+# Redux Snake
+Snake game which uses Redux for state management and ThreeJS for rendering.
 
 #Install
 ```npm install```

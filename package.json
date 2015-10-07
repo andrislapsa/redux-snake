@@ -1,5 +1,5 @@
 {
-  "name": "snake-react-canvas",
+  "name": "redux-snake",
   "version": "0.0.1",
   "description": "Simple snake game written using React Canvas and Redux.",
   "scripts": {
@@ -8,27 +8,22 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/andrislapsa/snake-react-canvas"
+    "url": "https://github.com/andrislapsa/redux-snake"
   },
   "keywords": [
-    "react",
-    "reactjs",
-    "boilerplate",
-    "hot",
-    "reload",
+    "snake",
+    "redux",
     "hmr",
-    "live",
-    "edit",
+    "threejs",
     "webpack",
-    "babel",
-    "react-transform"
+    "babel"
   ],
-  "author": "Andris",
+  "author": "Andri & Valdis",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/andrislapsa/snake-react-canvas/issues"
+    "url": "https://github.com/andrislapsa/redux-snake/issues"
   },
-  "homepage": "https://github.com/andrislapsa/snake-react-canvas",
+  "homepage": "https://github.com/andrislapsa/redux-snake",
   "devDependencies": {
     "babel-core": "^5.4.7",
     "babel-eslint": "^3.1.9",
