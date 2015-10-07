@@ -1,15 +1,12 @@
 import React, { Component } from "react";
 import _ from "lodash";
-import { Scene } from "react-three";
 import { connect } from "react-redux";
 import { Range } from "immutable";
 import * as snakeUtil from "./utils/snakeUtil";
 import { initGame, startGame, pauseGame, move, grow, spawnFood } from "./actions/actionCreators";
-import Camera from "./components/Camera";
-import Plane from "./components/Plane";
-import Cube from "./components/Cube";
-import Food from "./components/Food";
 import CameraAdjuster from "./components/CameraAdjuster";
+import THREE from "three"
+import Game from "./renderer/Game"
 
 export default class App extends Component {
     constructor() {
@@ -17,6 +14,7 @@ export default class App extends Component {
         this._onGameNewStartClick = this._onGameNewStartClick.bind(this);
         this._onGameStartClick = this._onGameStartClick.bind(this);
         this._onGamePauseClick = this._onGamePauseClick.bind(this);
+        this.game = new Game(40, 40);
     }
 
     _onGameNewStartClick() {
@@ -32,40 +30,10 @@ export default class App extends Component {
         this.props.dispatch(pauseGame());
     }
 
-    renderWebGLSection(segment) {
-        return (
-            <Cube x={segment.get("x")} y={segment.get("y")} />
-        );
-    }
-
-    worldToScreenSize(obj) {
-        return _.mapValues(obj, function(val) {
-            return val * 10;
-        });
-    }
-
     renderWebGL() {
-        let size = {
-            width: this.props.gridSize.get("width"),
-            height: this.props.gridSize.get("height")
-        };
-
+        this.game.updateState(this);
         return (
             <div>
-                <Scene camera="maincamera" {...this.worldToScreenSize(size)}>
-                    <Plane {...size} />
-                    <Camera
-                        {...size}
-                        cameraOffsetZ={this.props.cameraOffsetZ}
-                        cameraLookAtOffsetX={this.props.snakeBody.last().get("x")}
-                        cameraLookAtOffsetY={this.props.snakeBody.last().get("y")}
-                    />
-                    {this.props.snakeBody.map(this.renderWebGLSection)}
-                    <Food
-                        x={this.props.foodPosition.get("x")}
-                        y={this.props.foodPosition.get("y")}
-                    />
-                </Scene>
                 <CameraAdjuster dispatch={this.props.dispatch} />
             </div>
         );

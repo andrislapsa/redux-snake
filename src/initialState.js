@@ -5,11 +5,11 @@ export default {
 	direction: "down",
 	bufferedDirection: null, // used for better handling when multiple direction keystrokes are made in one tick
 	snakeBody: snakeUtil.addMultipleSegments(
-		{ x: 15, y: 15 },
+		{ x: 0, y: 6},
 		"down",
 		5
 	),
-	speed: 200, // ms per tick
+	speed: 400, // ms per tick
 	isGameStarted: false, // false when just initialized
 	isGamePaused: false,
     score: 0,
