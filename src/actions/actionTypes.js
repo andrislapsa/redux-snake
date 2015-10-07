@@ -1,5 +1,7 @@
 export const MOVE = 'MOVE';
 export const CHANGE_DIRECTION = 'CHANGE_DIRECTION';
+export const BUFFER_DIRECTION = 'BUFFER_DIRECTION';
+export const RESET_DIRECTION_BUFFER_FLAG = 'RESET_DIRECTION_BUFFER_FLAG';
 export const DIE = 'DIE';
 export const GROW = 'GROW';
 export const INIT_GAME = 'INIT_GAME';

@@ -15,8 +15,29 @@ export function move(state, action) {
 }
 
 export function changeDirection(state, action) {
-	if (action.type === consts.CHANGE_DIRECTION) {
-		return action.direction;
+    if (action.type === consts.CHANGE_DIRECTION) {
+        return state.withMutations((state) => {
+            return state
+                .set("direction", action.direction)
+                .set("directionChangedInTick", true);
+        });
+    }
+
+    return state;
+}
+
+export function bufferDirection(state, action) {
+    if (action.type === consts.BUFFER_DIRECTION) {
+        console.log(action);
+        return action.direction;
+    }
+
+    return state;
+}
+
+export function resetDirectionBufferFlag(state, action) {
+	if (action.type === consts.RESET_DIRECTION_BUFFER_FLAG) {
+		return false;
 	}
 
 	return state;

@@ -1,4 +1,4 @@
-import { changeDirection } from "./actions/actionCreators";
+import { changeDirection, bufferDirection } from "./actions/actionCreators";
 
 
 function isValidKeystroke(currentDirection, newDirection) {
@@ -19,7 +19,9 @@ function isValidKeystroke(currentDirection, newDirection) {
 
 export function listenToKeys(store) {
     document.onkeydown = function(e) {
-        let direction;
+        let direction,
+            state = store.getState();
+
         switch (e.keyCode) {
             case 37:
                 direction = 'left';
@@ -39,8 +41,12 @@ export function listenToKeys(store) {
             e.preventDefault();
         }
 
-        if (isValidKeystroke(store.getState().get("direction"), direction)) {
-            store.dispatch(changeDirection(direction));
+        if (isValidKeystroke(state.get("direction"), direction)) {
+            if (state.get("directionChangedInTick")) {
+                store.dispatch(bufferDirection(direction));
+            } else {
+                store.dispatch(changeDirection(direction));
+            }
         }
     };
 }

@@ -26,9 +26,16 @@ const mergedReducers = (state, action) => {
 
     state = reducer.move(state, action);
 
+    state = reducer.changeDirection(state, action);
+
     state = state.set(
-        "direction",
-        reducer.changeDirection(state.get("direction"), action)
+        "bufferedDirection",
+        reducer.bufferDirection(state.get("bufferedDirection"), action)
+    );
+
+    state = state.set(
+        "directionChangedInTick",
+        reducer.resetDirectionBufferFlag(state.get("directionChangedInTick"), action)
     );
 
     state = state.set(
@@ -72,6 +79,9 @@ function tick(store) {
         ),
         foodPosition = state.get("foodPosition");
 
+    // might be useful to have more generic actions, such as - prepareForNextTick
+    dispatch(actionCreators.resetDirectionBufferFlag());
+
     if (snakeUtil.positionsMatch(nextPosition, foodPosition)) {
         dispatch(actionCreators.increaseScore());
         dispatch(actionCreators.increaseSpeed());
@@ -80,6 +90,11 @@ function tick(store) {
         dispatch(actionCreators.decreaseCameraOffsetZ());
     } else {
         dispatch(actionCreators.move());
+    }
+
+    if (state.get("bufferedDirection")) {
+        dispatch(actionCreators.changeDirection(state.get("bufferedDirection")));
+        dispatch(actionCreators.bufferDirection(null));
     }
 }
 

@@ -13,6 +13,20 @@ export function changeDirection(direction) {
 	}
 }
 
+export function bufferDirection(direction) {
+	return {
+		type: consts.BUFFER_DIRECTION,
+		direction
+	}
+}
+
+export function resetDirectionBufferFlag(direction) {
+	return {
+		type: consts.RESET_DIRECTION_BUFFER_FLAG,
+		direction
+	}
+}
+
 export function die() {
 	return {
 		type: consts.DIE
