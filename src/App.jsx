@@ -14,7 +14,7 @@ export default class App extends Component {
         this._onGameNewStartClick = this._onGameNewStartClick.bind(this);
         this._onGameStartClick = this._onGameStartClick.bind(this);
         this._onGamePauseClick = this._onGamePauseClick.bind(this);
-        this.game = new Game(40, 40);
+        //this.game = new Game(40, 40);
     }
 
     _onGameNewStartClick() {
@@ -42,8 +42,14 @@ export default class App extends Component {
     renderText() {
         let grid = snakeUtil.generateGrid();
         this.props.snakeBody.map(segment => {
-            let y = this.props.gridSize.get("height") - segment.get("y");
-            grid[y][segment.get("x")] = "#";
+            let y = this.props.gridSize.get("height") - segment.get("y"),
+                x = segment.get("x");
+
+            if (!grid[y] || !grid[x]) {
+                return;
+            }
+
+            grid[y][x] = "#";
         });
         let foodY = this.props.gridSize.get("height")
             - this.props.foodPosition.get("y");
@@ -59,7 +65,7 @@ export default class App extends Component {
     render() {
         return (
             <div>
-                {this.renderWebGL()}
+                {this.renderText()}
                 <button
                     onClick={this._onGameNewStartClick}
                     disabled={this.props.isGameStarted?"disabled":""}

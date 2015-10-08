@@ -28,7 +28,6 @@ export function changeDirection(state, action) {
 
 export function bufferDirection(state, action) {
     if (action.type === consts.BUFFER_DIRECTION) {
-        console.log(action);
         return action.direction;
     }
 
