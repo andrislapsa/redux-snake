@@ -19,8 +19,8 @@ tick(store);
 
 let rootEl = document.querySelector("#root");
 React.render(
-	<Provider store={store}>
-		{ () => <App /> }
-	</Provider>,
-	rootEl
+    <Provider store={store}>
+        { () => <App /> }
+    </Provider>,
+    rootEl
 );
