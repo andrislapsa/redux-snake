@@ -10,16 +10,9 @@ import Game from "./renderer/Game"
 export default class App extends Component {
     constructor() {
         super();
-        this._onGameNewStartClick = this._onGameNewStartClick.bind(this);
         this._onGameStartClick = this._onGameStartClick.bind(this);
         this._onGamePauseClick = this._onGamePauseClick.bind(this);
         this.game = new Game();
-    }
-
-    _onGameNewStartClick() {
-        return;
-        this.props.dispatch(initGame());
-        this.props.dispatch(startGame());
     }
 
     _onGameStartClick() {
@@ -45,12 +38,6 @@ export default class App extends Component {
                     players={this.props.players}
                 />
                 <div id="controls">
-                    <button
-                        onClick={this._onGameNewStartClick}
-                        disabled={this.props.isGameStarted?"disabled":""}
-                        >
-                        Start new game
-                    </button>
                     <button
                         onClick={this._onGameStartClick}
                         disabled={this.props.isGamePaused?"":"disabled"}
