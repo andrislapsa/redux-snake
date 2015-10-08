@@ -4,8 +4,6 @@ export default function (state, action) {
         addPlayer(state.get("players"), action)
     );
 
-    console.log("REDUCER", state.get("players").toJSON(), action);
-
     return state;
 };
 
