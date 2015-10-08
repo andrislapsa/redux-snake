@@ -9,12 +9,14 @@ import initialState from "./initialState";
 import { listenToKeys } from "./keyboardController";
 import megaReducer from "./reducers/megaReducer";
 import tick from "./tick";
+import * as actions from "./actions/actionCreators"
 
 const store = createStore(megaReducer, fromJS(initialState));
 window.store = store;
 
 listenToKeys(store);
 tick(store);
+store.dispatch(actions.initGame());
 
 
 let rootEl = document.querySelector("#root");

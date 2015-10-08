@@ -1,6 +1,7 @@
 import * as consts from "../actions/actionTypes";
 import { Map, fromJS } from "immutable";
 import * as snakeUtil from "../utils/snakeUtil";
+import * as playerUtil from "../utils/playerUtil";
 import initialState from "../initialState";
 
 export function move(state, action) {
@@ -47,7 +48,11 @@ export function initGame(state, action) {
 		return state;
 	}
 
-	return state.merge(fromJS(initialState));
+	return state.withMutations((state) => {
+        return state
+            .merge(fromJS(initialState))
+            .set("playerId", playerUtil.generateRandomId());
+    });
 }
 
 export function startGame(state, action) {
