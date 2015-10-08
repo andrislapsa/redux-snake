@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import _ from "lodash";
 import { connect } from "react-redux";
 import { Range } from "immutable";
-import * as snakeUtil from "./utils/snakeUtil";
+import TextRendered from "./components/TextRendered";
 import { initGame, startGame, pauseGame, move, grow, spawnFood } from "./actions/actionCreators";
 import CameraAdjuster from "./components/CameraAdjuster";
 import THREE from "three"
@@ -39,32 +39,14 @@ export default class App extends Component {
         );
     }
 
-    renderText() {
-        let grid = snakeUtil.generateGrid();
-        this.props.snakeBody.map(segment => {
-            let y = this.props.gridSize.get("height") - segment.get("y") - 1,
-                x = segment.get("x");
-
-            if (!grid[y] || !grid[x]) {
-                return;
-            }
-
-            grid[y][x] = "#";
-        });
-        let foodY = this.props.gridSize.get("height") - this.props.foodPosition.get("y") - 1;
-        grid[foodY][this.props.foodPosition.get("x")] = "o";
-
-        return (
-            <pre style={{lineHeight: "8px"}}>
-                {grid}
-            </pre>
-        );
-    }
-
     render() {
         return (
             <div>
-                {this.renderText()}
+                <TextRendered
+                    foodPosition={this.props.foodPosition}
+                    gridSize={this.props.gridSize}
+                    snakeBody={this.props.snakeBody}
+                />
                 <button
                     onClick={this._onGameNewStartClick}
                     disabled={this.props.isGameStarted?"disabled":""}
