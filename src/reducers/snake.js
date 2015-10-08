@@ -88,7 +88,10 @@ export function grow(state, action) {
 
 export function updatePlayer(state, action) {
     if (action.type === consts.UPDATE_PLAYER) {
-        return state.set(action.playerId, action.snakeBody);
+        return state.set(
+            action.playerId,
+            fromJS({ snakeBody: action.snakeBody })
+        );
     }
 
     return state;
