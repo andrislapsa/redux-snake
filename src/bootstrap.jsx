@@ -2,6 +2,7 @@ import { createStore } from "redux";
 import React from "react";
 import { Provider } from "react-redux";
 import { fromJS } from "immutable";
+import io from "socket.io-client";
 
 import App from "./App";
 import initialState from "./initialState";
@@ -13,6 +14,17 @@ import * as actions from "./actions/actionCreators"
 
 const store = createStore(megaReducer, fromJS(initialState));
 window.store = store;
+
+const socket = io(`${location.protocol}//${location.hostname}:3000`);
+
+socket.on("connect", function(data) {
+    socket.emit("join", "ID");
+});
+
+//socket.on("snakeBody", snakeBody => {
+//    store.dispatch("kautkas")
+//});
+
 
 listenToKeys(store);
 tick(store);
