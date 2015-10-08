@@ -1,16 +1,17 @@
 import THREE from "three";
 import Segment from "./Segment";
-import Food from "./Food"
+import Food from "./Food";
+import Player from "./Player";
 
 var Game = class {
     constructor() {
         this.previousState = null;
         this.currentState = null;
-        this.snakeBody = []; // contains instances of Segment
         this.clock = new THREE.Clock();
         this.scene = new THREE.Scene();
         this.camera = new THREE.PerspectiveCamera(75, 500 / 500, 0.1, 1000);
         this.renderer = new THREE.WebGLRenderer();
+        this.players = {};
         this.food = null;
         this.gridWidth = 40;
         this.gridHeight = 40;
@@ -48,15 +49,13 @@ var Game = class {
     }
 
     update() {
-        if (this.snakeBody.length) {
-            this.snakeBody.forEach((cube) => {
-                cube.update();
-            });
-        }
-
         if (this.food) {
             this.food.update();
         }
+
+        for (var playerId in this.players) {
+            this.players[playerId].update();
+        };
 
         this.pointLight.position.x = Math.sin(this.clock.getElapsedTime()) * 4 + 20;
         this.pointLight.position.y = Math.cos(this.clock.getElapsedTime()) * 4 + 20;
@@ -68,10 +67,11 @@ var Game = class {
 
     updateSpeed(updateInterval) {
         this.speed = 1 / updateInterval * 1000; // should be '1 / initialState.speed * 1000' for "smooth" movement; can be changed to any value
-        //console.log("updateInterval", updateInterval, "this.speed", this.speed);
-        this.snakeBody.forEach((cube) => {
-            cube.speed = this.speed;
-        });
+        for (var playerId in this.players) {
+            this.players[playerId].snakeBody.forEach( (segment) => {
+                segment.speed = this.speed;
+            });
+        };
     }
 
     updateState(state) {
@@ -81,12 +81,25 @@ var Game = class {
         var self = this;
         var foodPos = this.currentState.foodPosition;
 
-        // initialize snake body; TODO(vv) move this somewhere else
-        if (!this.snakeBody.length && this.currentState && this.currentState.snakeBody) {
-            this.currentState.snakeBody.forEach((segment, i) => {
-                self.snakeBody.push(new Segment(self, segment.get("x"), segment.get("y")));
-            });
-        }
+        this.currentState.players.forEach( (playerData, playerId) => {
+            if (!(playerId in self.players)) {
+                var player = new Player(self, playerId);
+
+                playerData.get("snakeBody").forEach((segment, i) => {
+                    player.snakeBody.push(new Segment(self, segment.get("x"), segment.get("y"), player.color));
+                });
+                this.players[playerId] = player;
+            } else {
+                var player = self.players[playerId];
+
+                playerData.get("snakeBody").forEach((segment, i) => {
+                    if (!player.snakeBody[i]) {
+                        player.snakeBody[i] = new Segment(self, segment.get("x"), segment.get("y"), player.color);
+                    }
+                    player.snakeBody[i].moveTo(segment.get("x"), segment.get("y"));
+                });
+            }
+        });
 
         if (!this.food) {
             this.food = new Food(self, foodPos.get("x"), foodPos.get("y"));
@@ -97,40 +110,35 @@ var Game = class {
         if (this.previousState && this.previousState.speed !== this.currentState.speed) {
             this.updateSpeed(this.currentState.speed);
         }
-
-        this.currentState.snakeBody.map((segment, i) => {
-            if (!self.snakeBody[i]) {
-                self.snakeBody[i] = new Segment(self, segment.get("x"), segment.get("y"));
-            }
-            self.snakeBody[i].moveTo(segment.get("x"), segment.get("y"));
-        });
     }
 
     createWalls() {
+        var color = 0x5577ee;
+
         this.topWall = new THREE.Mesh(
             new THREE.BoxGeometry(this.gridWidth + 4, 1, 2),
-            new THREE.MeshLambertMaterial({color: 0x5577ee, shading: THREE.SmoothShading})
+            new THREE.MeshLambertMaterial({color: color})
         );
         this.topWall.position.set(this.gridWidth / 2, this.gridHeight + 1, 1);
         this.scene.add(this.topWall);
 
         this.rightWall = new THREE.Mesh(
             new THREE.BoxGeometry(1, this.gridHeight + 4, 2),
-            new THREE.MeshLambertMaterial({color: 0x5577ee, shading: THREE.SmoothShading})
+            new THREE.MeshLambertMaterial({color: color})
         );
         this.rightWall.position.set(this.gridWidth + 1, this.gridHeight / 2, 1);
         this.scene.add(this.rightWall);
 
         this.bottomWall = new THREE.Mesh(
             new THREE.BoxGeometry(this.gridWidth + 4, 1, 2),
-            new THREE.MeshLambertMaterial({color: 0x5577ee, shading: THREE.SmoothShading})
+            new THREE.MeshLambertMaterial({color: color})
         );
         this.bottomWall.position.set(this.gridWidth / 2, -1, 1);
         this.scene.add(this.bottomWall);
 
         this.leftWall = new THREE.Mesh(
             new THREE.BoxGeometry(1, this.gridHeight + 4, 2),
-            new THREE.MeshLambertMaterial({color: 0x5577ee, shading: THREE.SmoothShading})
+            new THREE.MeshLambertMaterial({color: color})
         );
         this.leftWall.position.set(-1, this.gridHeight / 2, 1);
         this.scene.add(this.leftWall);
