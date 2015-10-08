@@ -19,16 +19,16 @@ const socket = io(`${location.protocol}//${location.hostname}:3000`);
 
 socket.on("connect", function(data) {
     socket.emit("join", store.getState().get("playerId"));
+    store.dispatch(actions.initGame(socket));
 });
 
-//socket.on("snakeBody", snakeBody => {
-//    store.dispatch("kautkas")
-//});
+socket.on("snakeBody", data => {
+    store.dispatch(actions.updatePlayer(data.playerId, data.snakeBody));
+});
 
 
 listenToKeys(store);
 tick(store);
-store.dispatch(actions.initGame());
 
 
 let rootEl = document.querySelector("#root");

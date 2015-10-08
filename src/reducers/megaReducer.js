@@ -44,5 +44,10 @@ export default function (state, action) {
         reducer.decreaseCameraOffsetZ(state.get("cameraOffsetZ"), action)
     );
 
+    state = state.set(
+        "players",
+        reducer.updatePlayer(state.get("players"), action)
+    );
+
     return state;
 };

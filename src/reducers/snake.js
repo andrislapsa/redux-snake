@@ -51,7 +51,8 @@ export function initGame(state, action) {
 	return state.withMutations((state) => {
         return state
             .merge(fromJS(initialState))
-            .set("playerId", playerUtil.generateRandomId());
+            .set("playerId", playerUtil.generateRandomId())
+            .set("socket", action.socket);
     });
 }
 
@@ -87,10 +88,7 @@ export function grow(state, action) {
 
 export function updatePlayer(state, action) {
     if (action.type === consts.UPDATE_PLAYER) {
-        return state.set(
-            "snakeBody",
-            snakeUtil.grow(state.get("snakeBody"), state.get("direction"))
-        );
+        return state.set(action.playerId, action.snakeBody);
     }
 
     return state;

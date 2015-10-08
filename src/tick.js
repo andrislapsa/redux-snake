@@ -32,6 +32,11 @@ export default function tick (store) {
         dispatch(actionCreators.move());
     }
 
+    state.get("socket").emit("snakeBody", {
+        playerId: state.get("playerId"),
+        snakeBody: state.get("snakeBody")
+    });
+
     if (state.get("bufferedDirection")) {
         dispatch(actionCreators.changeDirection(state.get("bufferedDirection")));
         dispatch(actionCreators.bufferDirection(null));

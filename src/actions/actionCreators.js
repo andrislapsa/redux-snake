@@ -39,15 +39,18 @@ export function grow() {
 	};
 }
 
-export function updatePlayer() {
+export function updatePlayer(playerId, snakeBody) {
 	return {
-		type: consts.UPDATE_PLAYER
+		type: consts.UPDATE_PLAYER,
+		playerId,
+		snakeBody
 	};
 }
 
-export function initGame() {
+export function initGame(socket) {
     return {
-        type: consts.INIT_GAME
+        type: consts.INIT_GAME,
+        socket
     }
 }
 

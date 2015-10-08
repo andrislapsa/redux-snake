@@ -17,6 +17,7 @@ export default class App extends Component {
     }
 
     _onGameNewStartClick() {
+        return;
         this.props.dispatch(initGame());
         this.props.dispatch(startGame());
     }
