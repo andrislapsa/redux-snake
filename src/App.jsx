@@ -14,7 +14,7 @@ export default class App extends Component {
         this._onGameNewStartClick = this._onGameNewStartClick.bind(this);
         this._onGameStartClick = this._onGameStartClick.bind(this);
         this._onGamePauseClick = this._onGamePauseClick.bind(this);
-        //this.game = new Game(40, 40);
+        this.game = new Game(40, 40);
     }
 
     _onGameNewStartClick() {
@@ -32,6 +32,7 @@ export default class App extends Component {
 
     renderWebGL() {
         this.game.updateState(this);
+        return;
         return (
             <div>
                 <CameraAdjuster dispatch={this.props.dispatch} />
@@ -42,6 +43,7 @@ export default class App extends Component {
     render() {
         return (
             <div>
+                {this.renderWebGL()}
                 <TextRendered
                     foodPosition={this.props.foodPosition}
                     gridSize={this.props.gridSize}

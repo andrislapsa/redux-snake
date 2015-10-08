@@ -18,9 +18,7 @@ export default class TextRendered extends Component {
         grid[foodY][this.props.foodPosition.get("x")] = "o";
 
         return (
-            <pre style={{lineHeight: "8px"}}>
-                {grid}
-            </pre>
+            <pre>{grid}</pre>
         );
     }
 }
