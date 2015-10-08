@@ -26,7 +26,7 @@ app.get("/", function (req, res) {
 var server = http.createServer(app);
 var io = socketIO(server);
 
-server.listen(3000, "localhost", function (err) {
+server.listen(3000, function (err) {
     if (err) {
         console.log(err);
         return;
