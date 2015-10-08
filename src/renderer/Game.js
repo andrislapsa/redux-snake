@@ -1,5 +1,6 @@
 import THREE from "three";
 import Segment from "./Segment";
+import Food from "./Food"
 
 var Game = class {
     constructor() {
@@ -10,6 +11,7 @@ var Game = class {
         this.scene = new THREE.Scene();
         this.camera = new THREE.PerspectiveCamera(75, 500 / 500, 0.1, 1000);
         this.renderer = new THREE.WebGLRenderer();
+        this.food = null;
         this.speed = 10; // TODO(vv) get this from initial state
         this.renderer.setSize(500, 500); // TODO(vv) get this from initial state or something
 
@@ -42,6 +44,10 @@ var Game = class {
                 cube.update();
             });
         }
+
+        if (this.food) {
+            this.food.update();
+        }
     }
 
     render() {
@@ -49,25 +55,30 @@ var Game = class {
     }
 
     updateSpeed(updateInterval) {
-        this.speed = 1 / updateInterval * 1000 + 0.1; // should be '1 / initialState.speed * 1000' for "smooth" movement; can be changed to any value
+        this.speed = 1 / updateInterval * 1000; // should be '1 / initialState.speed * 1000' for "smooth" movement; can be changed to any value
         this.snakeBody.forEach((cube) => {
             cube.speed = this.speed;
         });
     }
 
     updateState(state) {
-        var self = this;
-
         this.previousState = this.currentState;
         this.currentState = state;
 
-        //TODO(vv) calculate diff for necessary fields and update appropriate properties of game object
+        var self = this;
+        var foodPos = this.currentState.foodPosition;
 
         // initialize snake body; TODO(vv) move this somewhere else
         if (!this.snakeBody.length && this.currentState && this.currentState.snakeBody) {
             this.currentState.snakeBody.forEach((segment, i) => {
                 self.snakeBody.push(new Segment(self, segment.get("x"), segment.get("y")));
             });
+        }
+
+        if (!this.food) {
+            this.food = new Food(self, foodPos.get("x"), foodPos.get("y"));
+        } else {
+            this.food.setPosition(foodPos.get("x"), foodPos.get("y"));
         }
 
         if (this.previousState && this.previousState.speed !== this.currentState.speed) {

@@ -1,7 +1,6 @@
-
 import THREE from "three";
 
-var Cube = class {
+var Segment = class {
     constructor(game, x, y) {
         this.object = new THREE.Mesh(
             new THREE.BoxGeometry(0.8, 0.8, 0.8),
@@ -45,4 +44,4 @@ var Cube = class {
     }
 }
 
-export default Cube;
+export default Segment;
