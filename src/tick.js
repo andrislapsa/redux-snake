@@ -1,12 +1,12 @@
 import * as snakeUtil from "./utils/snakeUtil";
 import * as actionCreators from "./actions/actionCreators";
 
-export default function tick (store) {
+export default function playerTick(store) {
     const dispatch = store.dispatch;
     let state = store.getState();
 
     // Create next tick
-    setTimeout(() => tick(store), state.get("speed"));
+    setTimeout(() => playerTick(store), state.get("speed"));
 
     if (!state.get("isGameStarted") || state.get("isGamePaused")) {
         return;

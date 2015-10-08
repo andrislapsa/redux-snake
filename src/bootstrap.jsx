@@ -20,7 +20,6 @@ const socket = io(`${location.protocol}//${location.hostname}:3000`);
 socket.on("connect", function(data) {
     socket.emit("join", store.getState().get("playerId"));
     store.dispatch(actions.initGame(socket));
-    store.dispatch(actions.startGame());
 });
 
 socket.on("snakeBody", data => {

@@ -11,6 +11,14 @@ config.entry.unshift("webpack-hot-middleware/client");
 let app = express();
 let compiler = webpack(config);
 
+import { createStore } from "redux";
+import megaReducer from "./reducer";
+import initialState from "./initialState";
+import { fromJS } from "immutable";
+import * as actions from "./actions/actionCreators"
+
+const store = createStore(megaReducer, fromJS(initialState));
+
 app.use(require("webpack-dev-middleware")(compiler, {
     noInfo: true,
     publicPath: config.output.publicPath
@@ -37,10 +45,11 @@ server.listen(3000, err => {
 
 
 io.on("connection", (client) => {
-    console.log("Client connectesd...");
+    console.log("Client connected...");
 
-    client.on("join", data => {
-        console.log("Client joined", data);
+    client.on("join", playerId => {
+        console.log("Client joined", playerId);
+        store.dispatch(actions.playerJoined(playerId));
     });
 
     client.on("snakeBody", data => {

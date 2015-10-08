@@ -12,7 +12,7 @@ export default {
     ),
     speed: 100, // ms per tick
     isGameStarted: false, // false when just initialized
-    isGamePaused: false,
+    isGamePaused: true,
     score: 0,
     foodPosition: {x: 20, y: 20},
     gridSize: {width: 40, height: 40},
