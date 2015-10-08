@@ -4,9 +4,8 @@ import { Provider } from "react-redux";
 import { fromJS } from "immutable";
 
 import App from "./App.jsx";
-import * as snakeUtil from "./utils/snakeUtil";
 import initialState from "./initialState";
-import * as actionCreators from "./actions/actionCreators";
+
 import { listenToKeys } from "./keyboardController";
 import megaReducer from "./megaReducer";
 import tick from "./tick";

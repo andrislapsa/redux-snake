@@ -1,3 +1,6 @@
+import * as snakeUtil from "./utils/snakeUtil";
+import * as actionCreators from "./actions/actionCreators";
+
 export default function tick (store) {
   const dispatch = store.dispatch;
   let state = store.getState();
