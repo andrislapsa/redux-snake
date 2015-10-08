@@ -17,25 +17,23 @@ function isValidKeystroke(currentDirection, newDirection) {
     return invalidKeystrokes[currentDirection] !== newDirection;
 }
 
+function getDirectionFromKeyEvent(e) {
+    switch (e.keyCode) {
+        case 37:
+            return "left";
+        case 38:
+            return "up";
+        case 39:
+            return "right";
+        case 40:
+            return "down";
+    }
+}
+
 export function listenToKeys(store) {
     document.onkeydown = function(e) {
-        let direction,
+        let direction = getDirectionFromKeyEvent(e),
             state = store.getState();
-
-        switch (e.keyCode) {
-            case 37:
-                direction = 'left';
-                break;
-            case 38:
-                direction = 'up';
-                break;
-            case 39:
-                direction = 'right';
-                break;
-            case 40:
-                direction = 'down';
-                break;
-        }
 
         if (direction) {
             e.preventDefault();
