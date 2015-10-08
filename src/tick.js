@@ -6,7 +6,7 @@ export default function tick (store) {
   let state = store.getState();
 
   // Create next tick
-  setTimeout(() => { tick(store) }, state.get("speed"));
+  setTimeout(() => tick(store), state.get("speed"));
 
   if (!state.get("isGameStarted") || state.get("isGamePaused")) {
     return;
