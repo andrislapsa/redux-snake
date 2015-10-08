@@ -8,7 +8,7 @@ var Cube = class {
             new THREE.MeshNormalMaterial({color: 0xff0000})
         );
         this.game = game;
-        this.speed = 1 / 0.3; // should be '1 / initialState.speed * 1000' for "smooth" movement; can be changed to any value
+        this.speed = 1 / 0.1; // should be '1 / initialState.speed * 1000' for "smooth" movement; can be changed to any value
         this.lerpPosStart = null;
         this.lerpPosEnd = null;
         this.lerpTimeStart = null;
@@ -18,7 +18,7 @@ var Cube = class {
 
     moveTo(x, y) {
         this.lerpPosStart = this.object.position.clone();
-        this.lerpPosEnd = new THREE.Vector3(x, y, 2);
+        this.lerpPosEnd = new THREE.Vector3(x, y, 1);
 
         var distance = Math.sqrt(Math.pow(this.lerpPosEnd.x - this.lerpPosStart.x, 2) + Math.pow(this.lerpPosEnd.y - this.lerpPosStart.y, 2));
 

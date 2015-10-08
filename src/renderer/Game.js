@@ -1,27 +1,33 @@
 import THREE from "three";
 import Cube from "./Cube";
 
+var logged = false;
+
 var Game = class {
-    constructor(width, height) {
+    constructor() {
         this.previousState = null;
         this.currentState = null;
         this.snakeBody = []; // contains instances of Cube
         this.clock = new THREE.Clock();
         this.scene = new THREE.Scene();
-        this.camera = new THREE.PerspectiveCamera(75, width/height, 0.1, 1000);
+        this.camera = new THREE.PerspectiveCamera(75, 500/500, 0.1, 1000);
         this.renderer = new THREE.WebGLRenderer();
         this.cube = null;
-
+        this.speed = 100; // TODO(vv) get this from initial state
         this.renderer.setSize(500, 500); // TODO(vv) get this from initial state or something
+
+        this.camera.position.x = 20;
+        this.camera.position.y = 20;
+        this.camera.position.z = 30;
         document.querySelector("#three-box").appendChild(this.renderer.domElement);
 
-        this.camera.position.z = 8; // TODO(vv) correct zoom
-
         // background
-        var geometry = new THREE.PlaneGeometry( 12, 8, 4 );
-        var material = new THREE.MeshBasicMaterial( {color: 0xff9933, side: THREE.DoubleSide} );
+        var geometry = new THREE.PlaneGeometry(42, 42, 0);
+        var material = new THREE.MeshBasicMaterial( {color: 0x994444, side: THREE.DoubleSide} );
         var plane = new THREE.Mesh( geometry, material );
-        plane.position.z = -10;
+        plane.position.x = 20;
+        plane.position.y = 20;
+        plane.position.z = 0;
         this.scene.add(plane);
 
         this.loop();
@@ -34,8 +40,10 @@ var Game = class {
     }
 
     update() {
-        if (this.cube) {
-            this.cube.update();
+        if (this.snakeBody.length) {
+            this.snakeBody.forEach((cube) => {
+                cube.update();
+            });
         }
     }
 
@@ -43,9 +51,15 @@ var Game = class {
         this.renderer.render(this.scene, this.camera);
     }
 
+    updateSnakeSpeed(updateInterval) {
+        this.snakeBody.forEach((cube) => {
+            cube.speed = 1 / updateInterval * 1000;
+        });
+    }
+
     updateState(state) {
-        if (!this.cube) {
-            this.cube = new Cube(this);
+        if (!this.snakeBody.length) {
+            this.snakeBody.push(new Cube(this));
         }
 
         //TODO(vv) calculate diff for necessary fields and update appropriate properties of game object
@@ -53,9 +67,13 @@ var Game = class {
         this.previousState = this.currentState;
         this.currentState = state;
 
-        var snakeHead = this.currentState.props.snakeBody.last();
+        if (this.previousState && this.previousState.speed !== this.currentState.speed) {
+            this.updateSnakeSpeed(this.currentState.speed);
+        }
 
-        this.cube.moveTo(snakeHead.get("x"), snakeHead.get("y"));
+        var snakeHead = this.currentState.snakeBody.last();
+
+        this.snakeBody[0].moveTo(snakeHead.get("x"), snakeHead.get("y"));
     }
 };
 

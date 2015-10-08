@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import { Range } from "immutable";
 import TextRendered from "./components/TextRendered";
 import { initGame, startGame, pauseGame, move, grow, spawnFood } from "./actions/actionCreators";
-import CameraAdjuster from "./components/CameraAdjuster";
 import THREE from "three"
 import Game from "./renderer/Game"
 
@@ -14,7 +13,7 @@ export default class App extends Component {
         this._onGameNewStartClick = this._onGameNewStartClick.bind(this);
         this._onGameStartClick = this._onGameStartClick.bind(this);
         this._onGamePauseClick = this._onGamePauseClick.bind(this);
-        this.game = new Game(40, 40);
+        this.game = new Game();
     }
 
     _onGameNewStartClick() {
@@ -30,20 +29,14 @@ export default class App extends Component {
         this.props.dispatch(pauseGame());
     }
 
-    renderWebGL() {
-        this.game.updateState(this);
-        return;
-        return (
-            <div>
-                <CameraAdjuster dispatch={this.props.dispatch} />
-            </div>
-        );
+    _updateWebglState() {
+        this.game.updateState(this.props);
     }
 
     render() {
         return (
             <div>
-                {this.renderWebGL()}
+                {this._updateWebglState()}
                 <TextRendered
                     foodPosition={this.props.foodPosition}
                     gridSize={this.props.gridSize}
@@ -79,6 +72,7 @@ export default class App extends Component {
 function selectStateParts(state) {
     return {
         direction: state.get("direction"),
+        speed: state.get("speed"),
         snakeBody: state.get("snakeBody"),
         foodPosition: state.get("foodPosition"),
         score: state.get("score"),
