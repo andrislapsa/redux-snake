@@ -49,24 +49,26 @@ export default class App extends Component {
                     gridSize={this.props.gridSize}
                     snakeBody={this.props.snakeBody}
                 />
-                <button
-                    onClick={this._onGameNewStartClick}
-                    disabled={this.props.isGameStarted?"disabled":""}
-                    >
-                    Start new game
-                </button>
-                <button
-                    onClick={this._onGameStartClick}
-                    disabled={this.props.isGamePaused?"":"disabled"}
-                    >
-                    Start game
-                </button>
-                <button
-                    onClick={this._onGamePauseClick}
-                    disabled={this.props.isGamePaused?"disabled":""}
-                    >
-                    Pause game
-                </button>
+                <div id="controls">
+                    <button
+                        onClick={this._onGameNewStartClick}
+                        disabled={this.props.isGameStarted?"disabled":""}
+                        >
+                        Start new game
+                    </button>
+                    <button
+                        onClick={this._onGameStartClick}
+                        disabled={this.props.isGamePaused?"":"disabled"}
+                        >
+                        Start game
+                    </button>
+                    <button
+                        onClick={this._onGamePauseClick}
+                        disabled={this.props.isGamePaused?"disabled":""}
+                        >
+                        Pause game
+                    </button>
+                </div>
                 Score: {this.props.score}
             </div>
         );

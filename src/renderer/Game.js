@@ -13,7 +13,7 @@ var Game = class {
         this.cube = null;
 
         this.renderer.setSize(500, 500); // TODO(vv) get this from initial state or something
-        document.body.appendChild(this.renderer.domElement);
+        document.querySelector("#three-box").appendChild(this.renderer.domElement);
 
         this.camera.position.z = 8; // TODO(vv) correct zoom
 
