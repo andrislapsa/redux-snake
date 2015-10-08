@@ -13,7 +13,7 @@ var Game = class {
         this.renderer = new THREE.WebGLRenderer();
         this.food = null;
         this.speed = 10; // TODO(vv) get this from initial state
-        this.renderer.setSize(500, 500); // TODO(vv) get this from initial state or something
+        this.renderer.setSize(600, 600); // TODO(vv) get this from initial state or something
 
         this.camera.position.x = 20;
         this.camera.position.y = 20;
@@ -21,13 +21,16 @@ var Game = class {
         document.querySelector("#three-box").appendChild(this.renderer.domElement);
 
         // background
-        var geometry = new THREE.PlaneGeometry(42, 42, 0);
-        var material = new THREE.MeshBasicMaterial({color: 0x994444, side: THREE.DoubleSide});
-        var plane = new THREE.Mesh(geometry, material);
-        plane.position.x = 20;
-        plane.position.y = 20;
-        plane.position.z = 0;
+        var plane = new THREE.Mesh(
+            new THREE.PlaneGeometry(42, 42, 0),
+            new THREE.MeshBasicMaterial({color: 0x343434, side: THREE.DoubleSide})
+        );
+        plane.position.set(20, 20, 0);
         this.scene.add(plane);
+
+        this.pointLight = new THREE.PointLight(0xffffff, 1);
+        this.pointLight.position.z = 30;
+        this.scene.add(this.pointLight);
 
         this.loop();
     }
@@ -48,6 +51,9 @@ var Game = class {
         if (this.food) {
             this.food.update();
         }
+
+        //this.pointLight.position.x = Math.sin(this.clock.getElapsedTime()) * 4 + 20;
+        //this.pointLight.position.y = Math.cos(this.clock.getElapsedTime()) * 4 + 20;
     }
 
     render() {
@@ -56,6 +62,7 @@ var Game = class {
 
     updateSpeed(updateInterval) {
         this.speed = 1 / updateInterval * 1000; // should be '1 / initialState.speed * 1000' for "smooth" movement; can be changed to any value
+        console.log("updateInterval", updateInterval, "this.speed", this.speed);
         this.snakeBody.forEach((cube) => {
             cube.speed = this.speed;
         });

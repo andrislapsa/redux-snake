@@ -4,7 +4,7 @@ var Food = class {
     constructor(game, x, y) {
         this.object = new THREE.Mesh(
             new THREE.BoxGeometry(1, 1, 1),
-            new THREE.MeshNormalMaterial({color: 0xff0000})
+            new THREE.MeshLambertMaterial({color: 0xff9900, shading: THREE.SmoothShading})
         );
         this.object.position.x = x;
         this.object.position.y = y;
