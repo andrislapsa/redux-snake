@@ -1,4 +1,4 @@
-import { changeDirection, bufferDirection } from "./actions/actionCreators";
+import { changeDirection, bufferDirection, pauseGame, startGame } from "./actions/actionCreators";
 
 
 function isValidKeystroke(currentDirection, newDirection) {
@@ -37,16 +37,22 @@ export function listenToKeys(store) {
 
         if (direction) {
             e.preventDefault();
+            if (isValidKeystroke(state.get("direction"), direction)) {
+                if (state.get("directionChangedInTick")) {
+                    store.dispatch(bufferDirection(direction));
+                } else {
+                    store.dispatch(changeDirection(direction));
+                }
+            }
         }
 
-        if (isValidKeystroke(state.get("direction"), direction)) {
-            if (state.get("directionChangedInTick")) {
-                store.dispatch(bufferDirection(direction));
+        if (e.keyCode === 32) {
+            e.preventDefault();
+            if (state.get("isGamePaused")) {
+                store.dispatch(startGame());
             } else {
-                store.dispatch(changeDirection(direction));
+                store.dispatch(pauseGame());
             }
         }
     };
 }
-
-
