@@ -14,7 +14,7 @@ export default {
     isGameStarted: false, // false when just initialized
     isGamePaused: false,
     score: 0,
-    foodPosition: {x: 0, y: 0},
+    foodPosition: {x: 20, y: 20},
     gridSize: {width: 40, height: 40},
     cameraOffsetZ: 30,
     directionChangedInTick: false,

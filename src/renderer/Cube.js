@@ -2,21 +2,28 @@
 import THREE from "three";
 
 var Cube = class {
-    constructor(game) {
+    constructor(game, x, y) {
         this.object = new THREE.Mesh(
-            new THREE.BoxGeometry(1, 1, 1),
+            new THREE.BoxGeometry(0.8, 0.8, 0.8),
             new THREE.MeshNormalMaterial({color: 0xff0000})
         );
+        this.object.position.x = x;
+        this.object.position.y = y;
         this.game = game;
-        this.speed = 1 / 0.1; // should be '1 / initialState.speed * 1000' for "smooth" movement; can be changed to any value
+        this.speed = this.game.speed;
         this.lerpPosStart = null;
         this.lerpPosEnd = null;
         this.lerpTimeStart = null;
         this.lerpTimeEnd = null;
         this.game.scene.add(this.object);
+        this.moveTo(x, y);
     }
 
     moveTo(x, y) {
+        if (this.lerpPosEnd && this.lerpPosEnd.x === x && this.lerpPosEnd.y === y) {
+            return;
+        }
+
         this.lerpPosStart = this.object.position.clone();
         this.lerpPosEnd = new THREE.Vector3(x, y, 1);
 
@@ -24,8 +31,6 @@ var Cube = class {
 
         this.lerpTimeStart = this.game.clock.getElapsedTime();
         this.lerpTimeEnd = this.lerpTimeStart + Math.abs(distance / this.speed);
-
-        //console.log("diff", this.lerpTimeStart, this.lerpTimeEnd, this.lerpTimeEnd - this.lerpTimeStart);
     }
 
     update() {
