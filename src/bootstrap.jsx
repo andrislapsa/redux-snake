@@ -18,7 +18,7 @@ window.store = store;
 const socket = io(`${location.protocol}//${location.hostname}:3000`);
 
 socket.on("connect", function(data) {
-    socket.emit("join", "ID");
+    socket.emit("join", store.getState().get("playerId"));
 });
 
 //socket.on("snakeBody", snakeBody => {
