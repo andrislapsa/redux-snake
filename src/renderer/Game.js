@@ -12,26 +12,32 @@ var Game = class {
         this.camera = new THREE.PerspectiveCamera(75, 500 / 500, 0.1, 1000);
         this.renderer = new THREE.WebGLRenderer();
         this.food = null;
+        this.gridWidth = 40;
+        this.gridHeight = 40;
         this.speed = 10; // TODO(vv) get this from initial state
-        this.renderer.setSize(600, 600); // TODO(vv) get this from initial state or something
+        this.initialize();
+    }
 
-        this.camera.position.x = 20;
-        this.camera.position.y = 20;
+    initialize() {
+        this.renderer.setSize(600, 600); // TODO(vv) get this from initial state or something
+        this.camera.position.x = this.gridWidth / 2;
+        this.camera.position.y = this.gridHeight / 2;
         this.camera.position.z = 30;
         document.querySelector("#three-box").appendChild(this.renderer.domElement);
 
         // background
         var plane = new THREE.Mesh(
-            new THREE.PlaneGeometry(42, 42, 0),
+            new THREE.PlaneGeometry(this.gridWidth + 2, this.gridHeight + 2, 0),
             new THREE.MeshBasicMaterial({color: 0x343434, side: THREE.DoubleSide})
         );
-        plane.position.set(20, 20, 0);
+        plane.position.set(this.gridWidth / 2, this.gridHeight / 2, 0);
         this.scene.add(plane);
 
         this.pointLight = new THREE.PointLight(0xffffff, 1);
         this.pointLight.position.z = 30;
         this.scene.add(this.pointLight);
 
+        this.createWalls();
         this.loop();
     }
 
@@ -52,8 +58,8 @@ var Game = class {
             this.food.update();
         }
 
-        //this.pointLight.position.x = Math.sin(this.clock.getElapsedTime()) * 4 + 20;
-        //this.pointLight.position.y = Math.cos(this.clock.getElapsedTime()) * 4 + 20;
+        this.pointLight.position.x = Math.sin(this.clock.getElapsedTime()) * 4 + 20;
+        this.pointLight.position.y = Math.cos(this.clock.getElapsedTime()) * 4 + 20;
     }
 
     render() {
@@ -62,7 +68,7 @@ var Game = class {
 
     updateSpeed(updateInterval) {
         this.speed = 1 / updateInterval * 1000; // should be '1 / initialState.speed * 1000' for "smooth" movement; can be changed to any value
-        console.log("updateInterval", updateInterval, "this.speed", this.speed);
+        //console.log("updateInterval", updateInterval, "this.speed", this.speed);
         this.snakeBody.forEach((cube) => {
             cube.speed = this.speed;
         });
@@ -99,6 +105,37 @@ var Game = class {
             self.snakeBody[i].moveTo(segment.get("x"), segment.get("y"));
         });
     }
+
+    createWalls() {
+        this.topWall = new THREE.Mesh(
+            new THREE.BoxGeometry(this.gridWidth + 4, 1, 2),
+            new THREE.MeshLambertMaterial({color: 0x5577ee, shading: THREE.SmoothShading})
+        );
+        this.topWall.position.set(this.gridWidth / 2, this.gridHeight + 1, 1);
+        this.scene.add(this.topWall);
+
+        this.rightWall = new THREE.Mesh(
+            new THREE.BoxGeometry(1, this.gridHeight + 4, 2),
+            new THREE.MeshLambertMaterial({color: 0x5577ee, shading: THREE.SmoothShading})
+        );
+        this.rightWall.position.set(this.gridWidth + 1, this.gridHeight / 2, 1);
+        this.scene.add(this.rightWall);
+
+        this.bottomWall = new THREE.Mesh(
+            new THREE.BoxGeometry(this.gridWidth + 4, 1, 2),
+            new THREE.MeshLambertMaterial({color: 0x5577ee, shading: THREE.SmoothShading})
+        );
+        this.bottomWall.position.set(this.gridWidth / 2, -1, 1);
+        this.scene.add(this.bottomWall);
+
+        this.leftWall = new THREE.Mesh(
+            new THREE.BoxGeometry(1, this.gridHeight + 4, 2),
+            new THREE.MeshLambertMaterial({color: 0x5577ee, shading: THREE.SmoothShading})
+        );
+        this.leftWall.position.set(-1, this.gridHeight / 2, 1);
+        this.scene.add(this.leftWall);
+    }
+
 };
 
 export default Game;

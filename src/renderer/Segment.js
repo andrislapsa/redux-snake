@@ -4,7 +4,7 @@ var Segment = class {
     constructor(game, x, y) {
         this.object = new THREE.Mesh(
             new THREE.BoxGeometry(0.8, 0.8, 0.8),
-            new THREE.MeshLambertMaterial({color: 0xff5555, shading: THREE.SmoothShading})
+            new THREE.MeshLambertMaterial({color: 0xff5555})
         );
         this.object.position.x = x;
         this.object.position.y = y;
