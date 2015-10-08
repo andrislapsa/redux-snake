@@ -1,4 +1,4 @@
-import * as reducer from "./reducers/snake";
+import * as reducer from "./snake";
 
 
 export default function (state, action) {

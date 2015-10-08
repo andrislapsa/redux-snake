@@ -7,7 +7,7 @@ import App from "./App";
 import initialState from "./initialState";
 
 import { listenToKeys } from "./keyboardController";
-import megaReducer from "./megaReducer";
+import megaReducer from "./reducers/megaReducer";
 import tick from "./tick";
 
 const store = createStore(megaReducer, fromJS(initialState));
