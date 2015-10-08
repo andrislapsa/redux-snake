@@ -1,5 +1,7 @@
 var path = require("path");
 var express = require("express");
+var http = require("http");
+var socketIO = require("socket.io");
 
 var webpack = require("webpack");
 var config = require("./webpack.config");
@@ -16,22 +18,15 @@ app.use(require("webpack-dev-middleware")(compiler, {
 
 app.use(require("webpack-hot-middleware")(compiler));
 
-
-app.get("*", function(req, res) {
+app.get("/", function(req, res) {
   res.sendFile(path.join(__dirname, "index.html"));
 });
 
 
-var expressWsApp = expressWs(app);
-app.ws("/", function(ws, req) {
-    ws.on("message", function(msg) {
-        console.log(msg);
-    });
-    console.log("socket", req.testing);
-});
+var server = http.createServer(app);
+var io = socketIO(server);
 
-
-app.listen(3000, "localhost", function (err) {
+server.listen(3000, "localhost", function (err) {
   if (err) {
     console.log(err);
     return;
@@ -42,5 +37,16 @@ app.listen(3000, "localhost", function (err) {
 
 
 
+io.on("connection", function(client) {
+    console.log("Client connected...");
 
+    client.on("join", function(data) {
+        console.log("Client joined", data);
+    });
+
+    client.on("snakeBody", function(data) {
+        console.log("snakeBody received", data);
+    });
+
+});
 
