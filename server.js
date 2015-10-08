@@ -45,6 +45,7 @@ io.on("connection", function (client) {
 
     client.on("snakeBody", function (data) {
         console.log("snakeBody received", data);
+        io.emit("snakeBody", data);
     });
 
 });
