@@ -1,4 +1,4 @@
-export default function (store) {
+export default function tick (store) {
   const dispatch = store.dispatch;
   let state = store.getState();
 

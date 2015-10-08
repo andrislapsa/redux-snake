@@ -4,7 +4,6 @@ import { Provider } from "react-redux";
 import { fromJS } from "immutable";
 
 import App from "./App.jsx";
-import * as reducer from "./reducers/snake";
 import * as snakeUtil from "./utils/snakeUtil";
 import initialState from "./initialState";
 import * as actionCreators from "./actions/actionCreators";

@@ -1,3 +1,6 @@
+import * as reducer from "./reducers/snake";
+
+
 export default function (state, action) {
   state = reducer.initGame(state, action);
 
