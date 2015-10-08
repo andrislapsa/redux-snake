@@ -122,7 +122,13 @@ export function increaseSpeed(state, action) {
         return state;
     }
 
-    return state - action.amount;
+    let newState = state - action.amount;
+
+    if (newState < 0) {
+        return 0;
+    }
+
+    return newState;
 }
 
 export function decreaseCameraOffsetZ(state, action) {
