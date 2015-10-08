@@ -39,6 +39,11 @@ export function grow() {
 	};
 }
 
+export function updatePlayer() {
+	return {
+		type: consts.UPDATE_PLAYER
+	};
+}
 
 export function initGame() {
     return {

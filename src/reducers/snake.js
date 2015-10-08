@@ -85,6 +85,17 @@ export function grow(state, action) {
     return state;
 }
 
+export function updatePlayer(state, action) {
+    if (action.type === consts.UPDATE_PLAYER) {
+        return state.set(
+            "snakeBody",
+            snakeUtil.grow(state.get("snakeBody"), state.get("direction"))
+        );
+    }
+
+    return state;
+}
+
 export function spawnFood(state, action) {
     if (action.type === consts.SPAWN_FOOD) {
         return state.set("foodPosition", snakeUtil.randomFoodPosition(
