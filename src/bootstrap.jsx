@@ -26,6 +26,10 @@ socket.on("snakeBody", data => {
     store.dispatch(actions.updatePlayer(data.playerId, data.snakeBody));
 });
 
+socket.on("food", data => {
+    store.dispatch(actions.updateFoodPosition(data));
+});
+
 
 listenToKeys(store);
 tick(store);

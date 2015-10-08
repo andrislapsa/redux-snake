@@ -109,6 +109,14 @@ export function spawnFood(state, action) {
     return state;
 }
 
+export function updateFood(state, action) {
+    if (action.type === consts.UPDATE_FOOD_POSITION) {
+        return state.set("foodPosition", fromJS({ x: action.x, y: action.y }));
+    }
+
+    return state;
+}
+
 export function increaseScore(state, action) {
     if (action.type !== consts.INCREASE_SCORE) {
         return state;

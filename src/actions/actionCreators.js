@@ -92,3 +92,9 @@ export function decreaseCameraOffsetZ(amount=0.5) {
 		amount
 	};
 }
+
+export function updateFoodPosition() {
+	return {
+		type: consts.UPDATE_FOOD_POSITION
+	};
+}

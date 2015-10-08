@@ -6,6 +6,8 @@ export default function (state, action) {
 
     state = reducer.spawnFood(state, action);
 
+    state = reducer.updateFood(state, action);
+
     state = reducer.grow(state, action);
 
     state = reducer.startGame(state, action);
