@@ -3,7 +3,7 @@ import React from "react";
 import { Provider } from "react-redux";
 import { fromJS } from "immutable";
 
-import App from "./App.jsx";
+import App from "./App";
 import initialState from "./initialState";
 
 import { listenToKeys } from "./keyboardController";

@@ -35,6 +35,9 @@ module.exports = {
     filename: "bundle.js",
     publicPath: "/static/"
   },
+  resolve: {
+    extensions: ["", ".js", ".jsx"]
+  },
   plugins: [
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
