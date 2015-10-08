@@ -8,8 +8,6 @@ export default function (state, action) {
 
     state = reducer.updateFood(state, action);
 
-    state = reducer.grow(state, action);
-
     state = reducer.startGame(state, action);
 
     state = state.set(
@@ -17,7 +15,7 @@ export default function (state, action) {
         reducer.pauseGame(state.get("isGamePaused"), action)
     );
 
-    state = reducer.move(state, action);
+    state = reducer.processSnakeBodyTick(state, action);
 
     state = reducer.changeDirection(state, action);
 

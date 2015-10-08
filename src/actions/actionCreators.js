@@ -1,11 +1,5 @@
 import * as consts from "./actionTypes";
 
-export function move() {
-	return {
-		type: consts.MOVE
-	};
-}
-
 export function changeDirection(direction) {
 	return {
 		type: consts.CHANGE_DIRECTION,
@@ -30,12 +24,6 @@ export function resetDirectionBufferFlag(direction) {
 export function die() {
 	return {
 		type: consts.DIE
-	};
-}
-
-export function grow() {
-	return {
-		type: consts.GROW
 	};
 }
 
@@ -97,4 +85,10 @@ export function updateFoodPosition() {
 	return {
 		type: consts.UPDATE_FOOD_POSITION
 	};
+}
+
+export function processSnakeBodyTick() {
+    return {
+        type: consts.PROCESS_SNAKE_BODY_TICK
+    };
 }

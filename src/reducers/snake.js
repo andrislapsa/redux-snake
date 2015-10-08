@@ -4,17 +4,6 @@ import * as snakeUtil from "../utils/snakeUtil";
 import * as playerUtil from "../utils/playerUtil";
 import initialState from "../initialState";
 
-export function move(state, action) {
-	if (action.type === consts.MOVE) {
-		return state.set(
-			"snakeBody",
-			snakeUtil.move(state.get("snakeBody"), state.get("direction"))
-		);
-	}
-
-	return state;
-}
-
 export function changeDirection(state, action) {
     if (action.type === consts.CHANGE_DIRECTION) {
         return state.withMutations((state) => {
@@ -73,17 +62,6 @@ export function pauseGame(state, action) {
     }
 
     return true;
-}
-
-export function grow(state, action) {
-    if (action.type === consts.GROW) {
-        return state.set(
-            "snakeBody",
-            snakeUtil.grow(state.get("snakeBody"), state.get("direction"))
-        );
-    }
-
-    return state;
 }
 
 export function updatePlayer(state, action) {
@@ -145,4 +123,26 @@ export function decreaseCameraOffsetZ(state, action) {
     }
 
     return state;
+}
+
+export function processSnakeBodyTick(state, action) {
+    if (action.type !== consts.PROCESS_SNAKE_BODY_TICK) {
+        return state;
+    }
+
+    let nextPosition = snakeUtil.getNextPosition(
+            state.get("snakeBody").last(),
+            state.get("direction")
+        ),
+        foodPosition = state.get("foodPosition"),
+        ateFood = snakeUtil.positionsMatch(nextPosition, foodPosition),
+        newSnakeBody;
+
+    if (ateFood) {
+        newSnakeBody = snakeUtil.grow(state.get("snakeBody"), state.get("direction"));
+    } else {
+        newSnakeBody = snakeUtil.move(state.get("snakeBody"), state.get("direction"));
+    }
+
+    return state.set("snakeBody", newSnakeBody);
 }

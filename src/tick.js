@@ -1,36 +1,20 @@
 import * as snakeUtil from "./utils/snakeUtil";
 import * as actionCreators from "./actions/actionCreators";
 
-export default function playerTick(store) {
+export default function clientTick(store) {
     const dispatch = store.dispatch;
     let state = store.getState();
 
     // Create next tick
-    setTimeout(() => playerTick(store), state.get("speed"));
+    setTimeout(() => clientTick(store), state.get("speed"));
 
     if (!state.get("isGameStarted") || state.get("isGamePaused")) {
         return;
     }
 
-    let snakeBody = state.get("snakeBody"),
-        nextPosition = snakeUtil.getNextPosition(
-            snakeBody.last(),
-            state.get("direction")
-        ),
-        foodPosition = state.get("foodPosition");
-
     // might be useful to have more generic actions, such as - prepareForNextTick
     dispatch(actionCreators.resetDirectionBufferFlag());
-
-    if (snakeUtil.positionsMatch(nextPosition, foodPosition)) {
-        dispatch(actionCreators.increaseScore());
-        dispatch(actionCreators.increaseSpeed());
-        dispatch(actionCreators.grow());
-        dispatch(actionCreators.spawnFood());
-        dispatch(actionCreators.decreaseCameraOffsetZ());
-    } else {
-        dispatch(actionCreators.move());
-    }
+    dispatch(actionCreators.processSnakeBodyTick());
 
     state.get("socket").emit("snakeBody", {
         playerId: state.get("playerId"),

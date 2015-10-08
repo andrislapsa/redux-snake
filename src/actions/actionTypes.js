@@ -1,9 +1,7 @@
-export const MOVE = "MOVE";
 export const CHANGE_DIRECTION = "CHANGE_DIRECTION";
 export const BUFFER_DIRECTION = "BUFFER_DIRECTION";
 export const RESET_DIRECTION_BUFFER_FLAG = "RESET_DIRECTION_BUFFER_FLAG";
 export const DIE = "DIE";
-export const GROW = "GROW";
 export const INIT_GAME = "INIT_GAME";
 export const START_GAME = "START_GAME";
 export const PAUSE_GAME = "PAUSE_GAME";
@@ -13,3 +11,4 @@ export const INCREASE_SPEED = "INCREASE_SPEED";
 export const DECREASE_CAMERA_Z = "DECREASE_CAMERA_Z";
 export const UPDATE_PLAYER = "UPDATE_PLAYER";
 export const UPDATE_FOOD_POSITION = "UPDATE_FOOD_POSITION";
+export const PROCESS_SNAKE_BODY_TICK = "PROCESS_SNAKE_BODY_TICK";
