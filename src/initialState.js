@@ -18,5 +18,10 @@ export default {
     gridSize: {width: 40, height: 40},
     cameraOffsetZ: 30,
     directionChangedInTick: false,
-    players: []
+    players: [
+        {
+            playerId: "mockedData",
+            snakeBody: JSON.parse('[{"x":22,"y":37},{"x":23,"y":37},{"x":24,"y":37},{"x":25,"y":37},{"x":25,"y":36},{"x":25,"y":35},{"x":25,"y":34},{"x":25,"y":33},{"x":25,"y":32},{"x":25,"y":31},{"x":25,"y":30},{"x":25,"y":29},{"x":25,"y":28},{"x":25,"y":27},{"x":25,"y":26},{"x":25,"y":25},{"x":25,"y":24},{"x":25,"y":23},{"x":25,"y":22},{"x":25,"y":21},{"x":25,"y":20}]')
+        }
+    ]
 };

@@ -48,6 +48,7 @@ export default class App extends Component {
                     foodPosition={this.props.foodPosition}
                     gridSize={this.props.gridSize}
                     snakeBody={this.props.snakeBody}
+                    players={this.props.players}
                 />
                 <div id="controls">
                     <button
@@ -84,7 +85,8 @@ function selectStateParts(state) {
         gridSize: state.get("gridSize"),
         isGamePaused: state.get("isGamePaused"),
         isGameStarted: state.get("isGameStarted"),
-        cameraOffsetZ: state.get("cameraOffsetZ")
+        cameraOffsetZ: state.get("cameraOffsetZ"),
+        players: state.get("players")
     };
 }
 
