@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import _ from "lodash";
 import { connect } from "react-redux";
 import { Range } from "immutable";
-import * as snakeUtil from "./utils/snakeUtil";
+import TextRendered from "./components/TextRendered";
 import { initGame, startGame, pauseGame, move, grow, spawnFood } from "./actions/actionCreators";
 import CameraAdjuster from "./components/CameraAdjuster";
 import THREE from "three"
@@ -14,7 +14,7 @@ export default class App extends Component {
         this._onGameNewStartClick = this._onGameNewStartClick.bind(this);
         this._onGameStartClick = this._onGameStartClick.bind(this);
         this._onGamePauseClick = this._onGamePauseClick.bind(this);
-        //this.game = new Game(40, 40);
+        this.game = new Game(40, 40);
     }
 
     _onGameNewStartClick() {
@@ -32,6 +32,7 @@ export default class App extends Component {
 
     renderWebGL() {
         this.game.updateState(this);
+        return;
         return (
             <div>
                 <CameraAdjuster dispatch={this.props.dispatch} />
@@ -39,32 +40,15 @@ export default class App extends Component {
         );
     }
 
-    renderText() {
-        let grid = snakeUtil.generateGrid();
-        this.props.snakeBody.map(segment => {
-            let y = this.props.gridSize.get("height") - segment.get("y") - 1,
-                x = segment.get("x");
-
-            if (!grid[y] || !grid[x]) {
-                return;
-            }
-
-            grid[y][x] = "#";
-        });
-        let foodY = this.props.gridSize.get("height") - this.props.foodPosition.get("y") - 1;
-        grid[foodY][this.props.foodPosition.get("x")] = "o";
-
-        return (
-            <pre style={{lineHeight: "8px"}}>
-                {grid}
-            </pre>
-        );
-    }
-
     render() {
         return (
             <div>
-                {this.renderText()}
+                {this.renderWebGL()}
+                <TextRendered
+                    foodPosition={this.props.foodPosition}
+                    gridSize={this.props.gridSize}
+                    snakeBody={this.props.snakeBody}
+                />
                 <button
                     onClick={this._onGameNewStartClick}
                     disabled={this.props.isGameStarted?"disabled":""}

@@ -9,7 +9,7 @@ export default {
 		"up",
 		5
 	),
-	speed: 400, // ms per tick
+	speed: 100, // ms per tick
 	isGameStarted: false, // false when just initialized
 	isGamePaused: false,
     score: 0,
