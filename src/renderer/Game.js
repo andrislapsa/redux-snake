@@ -1,11 +1,11 @@
 import THREE from "three";
-import Cube from "./Cube";
+import Segment from "./Segment";
 
 var Game = class {
     constructor() {
         this.previousState = null;
         this.currentState = null;
-        this.snakeBody = []; // contains instances of Cube
+        this.snakeBody = []; // contains instances of Segment
         this.clock = new THREE.Clock();
         this.scene = new THREE.Scene();
         this.camera = new THREE.PerspectiveCamera(75, 500 / 500, 0.1, 1000);
@@ -49,7 +49,7 @@ var Game = class {
     }
 
     updateSpeed(updateInterval) {
-        this.speed = 1 / updateInterval * 1000; // should be '1 / initialState.speed * 1000' for "smooth" movement; can be changed to any value
+        this.speed = 1 / updateInterval * 1000 + 0.1; // should be '1 / initialState.speed * 1000' for "smooth" movement; can be changed to any value
         this.snakeBody.forEach((cube) => {
             cube.speed = this.speed;
         });
@@ -66,7 +66,7 @@ var Game = class {
         // initialize snake body; TODO(vv) move this somewhere else
         if (!this.snakeBody.length && this.currentState && this.currentState.snakeBody) {
             this.currentState.snakeBody.forEach((segment, i) => {
-                self.snakeBody.push(new Cube(self, segment.get("x"), segment.get("y")));
+                self.snakeBody.push(new Segment(self, segment.get("x"), segment.get("y")));
             });
         }
 
@@ -76,7 +76,7 @@ var Game = class {
 
         this.currentState.snakeBody.map((segment, i) => {
             if (!self.snakeBody[i]) {
-                self.snakeBody[i] = new Cube(self, segment.get("x"), segment.get("y"));
+                self.snakeBody[i] = new Segment(self, segment.get("x"), segment.get("y"));
             }
             self.snakeBody[i].moveTo(segment.get("x"), segment.get("y"));
         });
