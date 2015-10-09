@@ -6,7 +6,7 @@ import { fromJS } from "immutable";
 
 import App from "./components/App";
 import initialState from "./initialState";
-import { createSocket, registerSocket } from "./socket/initSocket";
+import { createSocket, registerSocket } from "./socket/initClient";
 import { listenToKeys } from "./keyboardController";
 import megaReducer from "./reducers/megaReducer";
 import tick from "./tick";
