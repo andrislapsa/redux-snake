@@ -1,7 +1,9 @@
 import { Map } from "immutable";
 
+import * as config from "../src/config/config";
+
 export default {
-    speed: 100, // ms per tick
+    speed: config.SPEED, // ms per tick
     isGameStarted: false, // false when just initialized
     isGamePaused: true,
     foodPosition: { x: 20, y: 20 },

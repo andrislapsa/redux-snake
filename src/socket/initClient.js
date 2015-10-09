@@ -8,7 +8,6 @@ export function createSocket() {
 
 export function registerSocket(store, socket) {
     socket.on("connect", function(data) {
-        socket.emit("join", store.getState().get("playerId"));
         store.dispatch(actions.initGame(socket));
     });
 

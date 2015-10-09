@@ -37,10 +37,14 @@ export function initGame(state, action) {
 		return state;
 	}
 
+    let playerId = playerUtil.generateRandomId();
+
+    action.socket.emit("join", playerId);
+
 	return state.withMutations((state) => {
         return state
             .merge(fromJS(initialState))
-            .set("playerId", playerUtil.generateRandomId())
+            .set("playerId", playerId)
             .set("socket", action.socket);
     });
 }

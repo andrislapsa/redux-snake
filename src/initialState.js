@@ -1,5 +1,7 @@
 import { Map } from "immutable";
+
 import * as snakeUtil from "./utils/snakeUtil";
+import * as config from "../src/config/config";
 
 export default {
     direction: "up",
@@ -10,7 +12,7 @@ export default {
         "up",
         5
     ),
-    speed: 100, // ms per tick
+    speed: config.SPEED, // ms per tick
     isGameStarted: false, // false when just initialized
     isGamePaused: true,
     score: 0,

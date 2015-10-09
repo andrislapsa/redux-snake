@@ -61,8 +61,17 @@ export function generateGrid(width = 40, height = 40) {
     return grid;
 }
 
+export function isValidPosition(position) {
+    return (
+        position && position.get &&
+        position.get("x") !== undefined && position.get("y") !== undefined
+    );
+}
+
 export function positionsMatch(position1, position2) {
     return (
+        isValidPosition(position1) &&
+        isValidPosition(position2) &&
         position1.get("x") === position2.get("x") &&
         position1.get("y") === position2.get("y")
     )
@@ -89,4 +98,12 @@ export function randomPosition(width, height) {
         x: Math.floor(Math.random() * width),
         y: Math.floor(Math.random() * height)
     });
+}
+
+export function getHead(snakeBody) {
+    if (!snakeBody || !snakeBody.count()) {
+        return null;
+    }
+
+    return snakeBody.last();
 }

@@ -7,10 +7,16 @@ export function playerJoined(playerId) {
 	};
 }
 
-export function updateSnakeBody(playerId, snakeBody) {
+export function updatePlayerSnake(playerId, snakeBody) {
 	return {
-		type: consts.UPDATE_SNAKE_BODY,
+		type: consts.UPDATE_PLAYER_SNAKE,
         playerId,
         snakeBody
+	};
+}
+
+export function cleanupStalledPlayers() {
+	return {
+		type: consts.CLEANUP_STALLED_PLAYERS
 	};
 }
