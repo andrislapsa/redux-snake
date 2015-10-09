@@ -14,14 +14,13 @@ export default class App extends Component {
     render() {
         let snakeRenderers = [];
 
-        console.log("App", this.props);
-
         if (configUtil.isRendererEnabled("webgl")) {
-            snakeRenderers.push(<WebGLRenderer {...this.props} />);
+            snakeRenderers.push(<WebGLRenderer key="WebGL" {...this.props} />);
         }
 
         if (configUtil.isRendererEnabled("text")) {
             snakeRenderers.push(<TextRenderer
+                key="Text"
                 foodPosition={this.props.foodPosition}
                 gridSize={this.props.gridSize}
                 snakeBody={this.props.snakeBody}
