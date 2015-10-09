@@ -1,36 +1,22 @@
 import React, { Component } from "react";
 
-export default class Controls extends Component {
-    constructor() {
-        super();
-        this._onGameStartClick = this._onGameStartClick.bind(this);
-        this._onGamePauseClick = this._onGamePauseClick.bind(this);
-    }
+import { pauseGame, startGame } from "../actions/actionCreators";
 
-    _onGameStartClick() {
-        this.props.dispatch(startGame());
-    }
-
-    _onGamePauseClick() {
-        this.props.dispatch(pauseGame());
-    }
-
-    render() {
-        return (
-            <div id="controls">
-                <button
-                    onClick={this._onGameStartClick}
-                    disabled={this.props.isGamePaused?"":"disabled"}
-                    >
-                    Start game
-                </button>
-                <button
-                    onClick={this._onGamePauseClick}
-                    disabled={this.props.isGamePaused?"disabled":""}
-                    >
-                    Pause game
-                </button>
-            </div>
-        );
-    }
+export default function Controls(props) {
+    return (
+        <div id="controls">
+            <button
+                onClick={() => props.dispatch(startGame())}
+                disabled={props.isGamePaused ? "" : "disabled"}
+            >
+                Start game
+            </button>
+            <button
+                onClick={() => props.dispatch(pauseGame())}
+                disabled={props.isGamePaused ? "disabled" : ""}
+            >
+                Pause game
+            </button>
+        </div>
+    );
 }

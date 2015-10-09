@@ -1,44 +1,47 @@
 import React, { Component } from "react";
+import { fromJS } from "immutable";
+
 import * as snakeUtil from "../utils/snakeUtil";
 
-export default class TextRenderer extends Component {
-    putSnakeBodyIntoGrid(snakeBody, grid) {
-        snakeBody.map(segment => {
-            let y = this.props.gridSize.get("height") - segment.get("y") - 1,
-                x = segment.get("x");
+function putSnakeBodyIntoGrid(snakeBody, grid, gridSize) {
+    snakeBody.map(segment => {
+        let y = gridSize.get("height") - segment.get("y") - 1,
+            x = segment.get("x");
 
-            if (!grid[y] || !grid[x]) {
-                return;
-            }
+        if (!grid[y] || !grid[x]) {
+            return;
+        }
 
-            grid[y][x] = "#";
-        });
+        grid[y][x] = "#";
+    });
 
-        return grid;
-    }
+    return grid;
+}
 
-    renderGrid() {
-        let grid = snakeUtil.generateGrid();
+function renderGrid(players, foodPosition, gridSize) {
+    let grid = snakeUtil.generateGrid();
 
-        grid = this.putSnakeBodyIntoGrid(this.props.snakeBody, grid);
+    players.map((player) => {
+        grid = putSnakeBodyIntoGrid(player.get("snakeBody"), grid, gridSize);
+    });
 
-        this.props.players.map((player) => {
-            grid = this.putSnakeBodyIntoGrid(player.get("snakeBody"), grid);
-        });
+    let foodY = gridSize.get("height") - foodPosition.get("y") - 1;
+    grid[foodY][foodPosition.get("x")] = "o";
 
-        let foodY = this.props.gridSize.get("height") - this.props.foodPosition.get("y") - 1;
-        grid[foodY][this.props.foodPosition.get("x")] = "o";
+    return grid;
+}
 
-        return grid;
-    }
+export default function TextRenderer(props) {
+    let classes = ["text-renderer", props.size].join(" "),
+        players = props.players.set("currentPlayer", fromJS({ snakeBody: props.snakeBody }));
 
-    render() {
-        let classes = ["text-renderer", this.props.size].join(" ");
-
-        return (
-            <pre className={classes}>
-                {this.renderGrid()}
-            </pre>
-        );
-    }
+    return (
+        <pre className={classes}>
+            {renderGrid(
+                players,
+                props.foodPosition,
+                props.gridSize
+            )}
+        </pre>
+    );
 }

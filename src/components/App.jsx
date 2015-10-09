@@ -33,10 +33,13 @@ export default class App extends Component {
         return (
             <div>
                 {snakeRenderers}
-                <Controls />
+                <Controls
+                    isGamePaused={this.props.isGamePaused}
+                    dispatch={this.props.dispatch}
+                />
+                <Score points={this.props.score} />
             </div>
         );
-                // <Score points={this.props.score} />
     }
 }
 

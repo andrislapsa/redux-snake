@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 
-export default function Score() {
+export default function Score(props) {
     return (
         <div>
-            Scorfe: {this.props.points}
+            Score: {props.points}
         </div>
     );
 }
