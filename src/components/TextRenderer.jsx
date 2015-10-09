@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { fromJS } from "immutable";
+import { Map, fromJS } from "immutable";
 
 import * as snakeUtil from "../utils/snakeUtil";
 
@@ -32,6 +32,8 @@ function renderGrid(players, foodPosition, gridSize) {
 }
 
 export default function TextRenderer(props) {
+    window["ImmutableMap"] = Map;
+
     let classes = ["text-renderer", props.size].join(" "),
         players = props.players.set("currentPlayer", fromJS({ snakeBody: props.snakeBody }));
 

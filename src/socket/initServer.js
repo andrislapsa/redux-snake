@@ -2,6 +2,7 @@ import socketIO from "socket.io";
 import io from "socket.io-client";
 import _ from "lodash";
 
+import * as serverLog from "../../server/log";
 import * as actions from "../../server/actions/actionCreators";
 
 export function createSocket(server) {
@@ -13,10 +14,10 @@ export function registerSocket(store, io) {
 }
 
 function registerClient(store, io, client) {
-    console.log("Client connected...");
+    serverLog.info("Client connected...");
 
     client.on("join", playerId => {
-        console.log("Client joined", playerId);
+        serverLog.info("Client joined", playerId);
         store.dispatch(actions.playerJoined(playerId));
     });
 

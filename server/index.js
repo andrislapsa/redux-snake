@@ -16,6 +16,7 @@ import initialState from "./initialState";
 import { fromJS } from "immutable";
 import ticker from "./ticker"
 import { createSocket, registerSocket } from "../src/socket/initServer";
+import * as log from "./log";
 
 const store = createStore(megaReducer, fromJS(initialState));
 
@@ -35,11 +36,11 @@ let server = http.createServer(app),
 
 server.listen(3000, err => {
     if (err) {
-        console.log(err);
+        log.error(err, log.ERROR);
         return;
     }
 
-    console.log("Listening at http://localhost:3000");
+    log.info("Listening at http://localhost:3000");
 });
 
 

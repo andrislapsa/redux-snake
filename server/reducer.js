@@ -1,5 +1,7 @@
 import { fromJS } from "immutable";
 
+import * as log from "./log";
+import * as config from "../src/config/config";
 import * as consts from "./actions/actionTypes";
 import initialPlayerState from "../src/initialState";
 import * as snakeUtil from "../src/utils/snakeUtil";
@@ -51,7 +53,12 @@ function cleanupStalledPlayers(state, action) {
                 player.stalledTicks++;
             }
 
-            player.previousSnakeBody = player.snakeBody;
+            if (player.stalledTicks > config.CLIENT_TICK_TIMEOUT) {
+                log.info(`Player '${playerId}' removed from state due to stalling.`);
+                delete mState[playerId];
+            } else {
+                player.previousSnakeBody = player.snakeBody;
+            }
         }
 
         return fromJS(mState);
@@ -64,7 +71,12 @@ function updatePlayerSnake(state, action) {
     if (action.type === consts.UPDATE_PLAYER_SNAKE) {
         let previousPlayerState = state.get(action.playerId);
 
-        // console.log("previousPlayerState !!!! %s !!!!", action.playerId, previousPlayerState);
+        if (!previousPlayerState) {
+            log.info(`Player '${action.playerId}' got kicked out (no previous state on server)`);
+            return state;
+        }
+
+        // log.debug("previousPlayerState !!!! %s !!!!", action.playerId, previousPlayerState);
 
         return state.withMutations((state) => {
             state.setIn(

@@ -40,6 +40,7 @@
     "webpack-hot-middleware": "^2.4.1"
   },
   "dependencies": {
+    "cli-color": "^1.0.0",
     "immutable": "^3.7.5",
     "lodash": "^3.10.1",
     "react": "^0.14.0",

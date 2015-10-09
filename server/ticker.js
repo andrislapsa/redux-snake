@@ -1,13 +1,18 @@
 import * as actions from "./actions/actionCreators";
 import * as snakeUtil from "../src/utils/snakeUtil";
+import * as log from "./log";
 
 const speed = 300;
+let emptyTickLogged = false;
 
 export default function ticker(store, io) {
     let state = store.getState(),
         players = state.get("players");
 
-    console.log("server tick (players online: %d)", players.count());
+    if (players.count() > 0 || !emptyTickLogged) {
+        emptyTickLogged = true;
+        log.debug(`server tick (players online: ${players.count()})`);
+    }
 
     setTimeout(() => ticker(store, io), state.get("speed"));
 
@@ -15,14 +20,15 @@ export default function ticker(store, io) {
         return;
     }
 
+    emptyTickLogged = false;
+
     let foodPosition = state.get("foodPosition");
 
     players.map((player, playerId) => {
-        let previousHeadPosition = snakeUtil.getHead(player.get("previousSnakeBody")),
-            headPosition = snakeUtil.getHead(player.get("snakeBody"));
+        let headPosition = snakeUtil.getHead(player.get("snakeBody"));
 
         // Here we can make collision detection with food or other players
-        console.log("player %s stalledTicks %d", playerId, player.get("stalledTicks"), previousHeadPosition, headPosition);
+        log.debug(`[${playerId}] stalledTicks ${player.get("stalledTicks")} @ ${headPosition}`);
     });
 
     store.dispatch(actions.cleanupStalledPlayers());
