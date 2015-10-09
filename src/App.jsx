@@ -4,15 +4,15 @@ import { connect } from "react-redux";
 import { Range } from "immutable";
 import TextRendered from "./components/TextRendered";
 import { initGame, startGame, pauseGame, move, grow, spawnFood } from "./actions/actionCreators";
-import THREE from "three"
-import Game from "./renderer/Game"
+import THREE from "three";
+import Game from "./renderer/Game";
+import * as configUtil from "./config/configUtil"
 
 export default class App extends Component {
     constructor() {
         super();
         this._onGameStartClick = this._onGameStartClick.bind(this);
         this._onGamePauseClick = this._onGamePauseClick.bind(this);
-        this.game = new Game();
     }
 
     _onGameStartClick() {
@@ -28,15 +28,25 @@ export default class App extends Component {
     }
 
     render() {
+        let snakeRenderers = [];
+
+        if (configUtil.isRendererEnabled("webgl")) {
+            this.game = this.game || new Game();
+            snakeRenderers.push(this._updateWebglState());
+        }
+
+        if (configUtil.isRendererEnabled("text")) {
+            snakeRenderers.push(<TextRendered
+                foodPosition={this.props.foodPosition}
+                gridSize={this.props.gridSize}
+                snakeBody={this.props.snakeBody}
+                players={this.props.players}
+            />);
+        }
+
         return (
             <div>
-                {this._updateWebglState()}
-                <TextRendered
-                    foodPosition={this.props.foodPosition}
-                    gridSize={this.props.gridSize}
-                    snakeBody={this.props.snakeBody}
-                    players={this.props.players}
-                />
+                {snakeRenderers}
                 <div id="controls">
                     <button
                         onClick={this._onGameStartClick}
