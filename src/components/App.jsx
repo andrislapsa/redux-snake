@@ -4,12 +4,12 @@ import { connect } from "react-redux";
 import { Range } from "immutable";
 import THREE from "three";
 
-import * as config from "./config/config";
-import * as configUtil from "./config/configUtil";
-import WebGLRenderer from "./components/WebGLRenderer";
-import TextRenderer from "./components/TextRenderer";
-import Controls from "./components/Controls";
-import Score from "./components/Score";
+import * as config from "../config/config";
+import * as configUtil from "../config/configUtil";
+import WebGLRenderer from "./WebGLRenderer";
+import TextRenderer from "./TextRenderer";
+import Controls from "./Controls";
+import Score from "./Score";
 
 export default class App extends Component {
     render() {
