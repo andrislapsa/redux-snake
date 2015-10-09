@@ -68,12 +68,9 @@ export function pauseGame(state, action) {
     return true;
 }
 
-export function updatePlayer(state, action) {
-    if (action.type === consts.UPDATE_PLAYER) {
-        return state.set(
-            action.playerId,
-            fromJS({ snakeBody: action.snakeBody })
-        );
+export function updateOtherPlayers(state, action) {
+    if (action.type === consts.UPDATE_PLAYERS) {
+        return fromJS(action.data);
     }
 
     return state;

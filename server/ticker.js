@@ -32,4 +32,8 @@ export default function ticker(store, io) {
     });
 
     store.dispatch(actions.cleanupStalledPlayers());
+
+    let food = { hehe: "food" };
+
+    io.emit("serverTick", { players, food });
 }

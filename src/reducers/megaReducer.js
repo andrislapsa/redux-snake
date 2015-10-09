@@ -46,7 +46,7 @@ export default function (state, action) {
 
     state = state.set(
         "players",
-        reducer.updatePlayer(state.get("players"), action)
+        reducer.updateOtherPlayers(state.get("players"), action)
     );
 
     return state;

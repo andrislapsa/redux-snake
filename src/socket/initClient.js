@@ -11,11 +11,8 @@ export function registerSocket(store, socket) {
         store.dispatch(actions.initGame(socket));
     });
 
-    socket.on("snakeBody", data => {
-        store.dispatch(actions.updatePlayer(data.playerId, data.snakeBody));
-    });
-
-    socket.on("food", data => {
-        store.dispatch(actions.updateFoodPosition(data));
+    socket.on("serverTick", data => {
+        store.dispatch(actions.updateOtherPlayers(data.players));
+        // store.dispatch(actions.updateFoodPosition(data.food));
     });
 }

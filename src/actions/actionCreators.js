@@ -27,11 +27,10 @@ export function die() {
 	};
 }
 
-export function updatePlayer(playerId, snakeBody) {
+export function updateOtherPlayers(data) {
 	return {
-		type: consts.UPDATE_PLAYER,
-		playerId,
-		snakeBody
+		type: consts.UPDATE_PLAYERS,
+		data
 	};
 }
 
