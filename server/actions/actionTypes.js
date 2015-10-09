@@ -1,1 +1,2 @@
 export const PLAYER_JOINED = "PLAYER_JOINED";
+export const UPDATE_SNAKE_BODY = "UPDATE_SNAKE_BODY";

@@ -16,7 +16,7 @@ import megaReducer from "./reducer";
 import initialState from "./initialState";
 import { fromJS } from "immutable";
 import * as actions from "./actions/actionCreators"
-import { updatePlayer } from "../src/actions/actionCreators";
+import ticker from "./ticker"
 
 const store = createStore(megaReducer, fromJS(initialState));
 
@@ -54,11 +54,11 @@ io.on("connection", (client) => {
     });
 
     client.on("snakeBody", data => {
-        //console.log("playerData received", data, store.getState().toJSON());
-        //console.log("playerData received", store.getState().toJSON());
         io.emit("snakeBody", data);
 
-        store.dispatch(updatePlayer(data.playerId, data.snakeBody));
+        store.dispatch(actions.updateSnakeBody(data.playerId, data.snakeBody));
     });
 
 });
+
+ticker(store, io);

@@ -6,3 +6,11 @@ export function playerJoined(playerId) {
         playerId
 	};
 }
+
+export function updateSnakeBody(playerId, snakeBody) {
+	return {
+		type: consts.UPDATE_SNAKE_BODY,
+        playerId,
+        snakeBody
+	};
+}
