@@ -1,5 +1,6 @@
 import { createStore } from "redux";
 import React from "react";
+import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { fromJS } from "immutable";
 import io from "socket.io-client";
@@ -36,9 +37,9 @@ tick(store);
 
 
 let rootEl = document.querySelector("#root");
-React.render(
+ReactDOM.render(
     <Provider store={store}>
-        { () => <App /> }
+        <App />
     </Provider>,
     rootEl
 );

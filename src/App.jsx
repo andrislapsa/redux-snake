@@ -2,41 +2,26 @@ import React, { Component } from "react";
 import _ from "lodash";
 import { connect } from "react-redux";
 import { Range } from "immutable";
-import TextRendered from "./components/TextRendered";
-import { initGame, startGame, pauseGame, move, grow, spawnFood } from "./actions/actionCreators";
 import THREE from "three";
-import Game from "./renderer/Game";
-import * as configUtil from "./config/configUtil"
+
+import * as configUtil from "./config/configUtil";
+import WebGLRenderer from "./components/WebGLRenderer";
+import TextRenderer from "./components/TextRenderer";
+import Controls from "./components/Controls";
+import Score from "./components/Score";
 
 export default class App extends Component {
-    constructor() {
-        super();
-        this._onGameStartClick = this._onGameStartClick.bind(this);
-        this._onGamePauseClick = this._onGamePauseClick.bind(this);
-    }
-
-    _onGameStartClick() {
-        this.props.dispatch(startGame());
-    }
-
-    _onGamePauseClick() {
-        this.props.dispatch(pauseGame());
-    }
-
-    _updateWebglState() {
-        this.game.updateState(this.props);
-    }
-
     render() {
         let snakeRenderers = [];
 
+        console.log("App", this.props);
+
         if (configUtil.isRendererEnabled("webgl")) {
-            this.game = this.game || new Game();
-            snakeRenderers.push(this._updateWebglState());
+            snakeRenderers.push(<WebGLRenderer {...this.props} />);
         }
 
         if (configUtil.isRendererEnabled("text")) {
-            snakeRenderers.push(<TextRendered
+            snakeRenderers.push(<TextRenderer
                 foodPosition={this.props.foodPosition}
                 gridSize={this.props.gridSize}
                 snakeBody={this.props.snakeBody}
@@ -47,23 +32,10 @@ export default class App extends Component {
         return (
             <div>
                 {snakeRenderers}
-                <div id="controls">
-                    <button
-                        onClick={this._onGameStartClick}
-                        disabled={this.props.isGamePaused?"":"disabled"}
-                        >
-                        Start game
-                    </button>
-                    <button
-                        onClick={this._onGamePauseClick}
-                        disabled={this.props.isGamePaused?"disabled":""}
-                        >
-                        Pause game
-                    </button>
-                </div>
-                Score: {this.props.score}
+                <Controls />
             </div>
         );
+                // <Score points={this.props.score} />
     }
 }
 
