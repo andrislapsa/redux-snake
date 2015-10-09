@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { Range } from "immutable";
 import THREE from "three";
 
+import * as config from "./config/config";
 import * as configUtil from "./config/configUtil";
 import WebGLRenderer from "./components/WebGLRenderer";
 import TextRenderer from "./components/TextRenderer";
@@ -21,6 +22,7 @@ export default class App extends Component {
         if (configUtil.isRendererEnabled("text")) {
             snakeRenderers.push(<TextRenderer
                 key="Text"
+                size={config.TEXT_RENDERER_SIZE}
                 foodPosition={this.props.foodPosition}
                 gridSize={this.props.gridSize}
                 snakeBody={this.props.snakeBody}

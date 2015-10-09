@@ -17,7 +17,7 @@ export default class TextRenderer extends Component {
         return grid;
     }
 
-    render() {
+    renderGrid() {
         let grid = snakeUtil.generateGrid();
 
         grid = this.putSnakeBodyIntoGrid(this.props.snakeBody, grid);
@@ -29,8 +29,16 @@ export default class TextRenderer extends Component {
         let foodY = this.props.gridSize.get("height") - this.props.foodPosition.get("y") - 1;
         grid[foodY][this.props.foodPosition.get("x")] = "o";
 
+        return grid;
+    }
+
+    render() {
+        let classes = ["text-renderer", this.props.size].join(" ");
+
         return (
-            <pre>{grid}</pre>
+            <pre className={classes}>
+                {this.renderGrid()}
+            </pre>
         );
     }
 }
