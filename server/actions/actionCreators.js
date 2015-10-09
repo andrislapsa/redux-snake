@@ -7,11 +7,12 @@ export function playerJoined(playerId) {
 	};
 }
 
-export function updatePlayerSnake(playerId, snakeBody) {
+export function updatePlayerSnake(playerId, snakeBody, client) {
 	return {
 		type: consts.UPDATE_PLAYER_SNAKE,
         playerId,
-        snakeBody
+        snakeBody,
+        client
 	};
 }
 

@@ -22,6 +22,6 @@ function registerClient(store, io, client) {
     });
 
     client.on("snakeBody", data => {
-        store.dispatch(actions.updatePlayerSnake(data.playerId, data.snakeBody));
+        store.dispatch(actions.updatePlayerSnake(data.playerId, data.snakeBody, client));
     });
 };

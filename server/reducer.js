@@ -73,6 +73,7 @@ function updatePlayerSnake(state, action) {
 
         if (!previousPlayerState) {
             log.info(`Player '${action.playerId}' got kicked out (no previous state on server)`);
+            action.client.disconnect();
             return state;
         }
 
