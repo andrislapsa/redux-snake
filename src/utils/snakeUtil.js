@@ -1,4 +1,6 @@
-import { Map, List } from "immutable";
+import { Map, List, fromJS } from "immutable";
+
+import * as config from "../config/config";
 
 export function addMultipleSegments(currentPosition, direction, count) {
     let result = List(),
@@ -21,12 +23,48 @@ export function getNextPosition(currentPosition, direction) {
             down: {x: 0, y: -1},
             left: {x: -1, y: 0},
             right: {x: 1, y: 0}
-        };
+        },
+        diff = directionMap[direction],
+        newX = result.get("x") + diff.x,
+        newY = result.get("y") + diff.y,
+        gridSize = fromJS(config.GRID_SIZE), // TODO [refactor] use gridSize from state
+        newPosition = result.withMutations(position => position.set("x", newX).set("y", newY));
 
-    return result.withMutations(position => {
-        let diff = directionMap[direction];
-        position.set("x", position.get("x") + diff.x);
-        position.set("y", position.get("y") + diff.y);
+    if (positionOutOfBounds(newPosition, gridSize)) {
+        newPosition = teleport(newPosition, gridSize);
+    }
+
+    return newPosition;
+}
+
+export function positionOutOfBounds(position, gridSize) {
+    if (position.get("x") < 0 || position.get("y") < 0) {
+        return true;
+    }
+
+    if (position.get("x") > gridSize.get("width") || position.get("y") > gridSize.get("height")) {
+        return true;
+    }
+}
+
+export function teleport(position, gridSize) {
+    return position.withMutations(position => {
+        if (position.get("x") > gridSize.get("width")) {
+            position.set("x", 0);
+        }
+
+        if (position.get("y") > gridSize.get("height")) {
+            position.set("y", 0);
+        }
+
+        if (position.get("x") < 0) {
+            position.set("x", gridSize.get("width"));
+        }
+
+        if (position.get("y") < 0) {
+            position.set("y", gridSize.get("height"));
+        }
+
         return position;
     });
 }
