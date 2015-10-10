@@ -22,6 +22,7 @@ export default class App extends Component {
         if (configUtil.isRendererEnabled("text")) {
             snakeRenderers.push(<TextRenderer
                 key="Text"
+                currentPlayerId={this.props.playerId}
                 size={config.TEXT_RENDERER_SIZE}
                 foodPosition={this.props.foodPosition}
                 gridSize={this.props.gridSize}
@@ -54,7 +55,8 @@ function selectStateParts(state) {
         isGamePaused: state.get("isGamePaused"),
         isGameStarted: state.get("isGameStarted"),
         cameraOffsetZ: state.get("cameraOffsetZ"),
-        players: state.get("players")
+        players: state.get("players"),
+        playerId: state.get("playerId")
     };
 }
 

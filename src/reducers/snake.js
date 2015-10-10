@@ -70,7 +70,10 @@ export function pauseGame(state, action) {
 
 export function updateOtherPlayers(state, action) {
     if (action.type === consts.UPDATE_PLAYERS) {
-        return fromJS(action.data);
+        // removing current player to prevent double client renderation
+        delete action.data[state.get("playerId")];
+
+        return state.set("players", fromJS(action.data));
     }
 
     return state;

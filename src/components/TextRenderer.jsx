@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Map, fromJS } from "immutable";
+import _ from "lodash";
 
 import * as snakeUtil from "../utils/snakeUtil";
 
@@ -35,19 +36,44 @@ function renderGrid(players, foodPosition, gridSize) {
     return grid;
 }
 
+function playerInfo(currentPlayerId, player, playerId) {
+    let playerHeadPosition = snakeUtil.getHead(player.get("snakeBody")),
+        classes = ["player-info"];
+
+    if (currentPlayerId === playerId) {
+        classes.push("current-player");
+    }
+
+    return (
+        <pre key={playerId} className={classes.join(" ")}>
+            Player [{playerId}] head position:
+            x={playerHeadPosition.get("x")} y={playerHeadPosition.get("y")}
+        </pre>
+    )
+}
+
 export default function TextRenderer(props) {
     window["ImmutableMap"] = Map;
 
     let classes = ["text-renderer", props.size].join(" "),
-        players = props.players.set("currentPlayer", fromJS({ snakeBody: props.snakeBody }));
+        players = props.players.set(props.currentPlayerId, fromJS({ snakeBody: props.snakeBody })),
+        info = [];
+
+    // not using map, as React doesn't seem to like it yet
+    players.forEach((player, playerId) => {
+        info.push(playerInfo(props.currentPlayerId, player, playerId));
+    });
 
     return (
-        <pre className={classes}>
-            {renderGrid(
-                players,
-                props.foodPosition,
-                props.gridSize
-            )}
-        </pre>
+        <div>
+            <pre className={classes}>
+                {renderGrid(
+                    players,
+                    props.foodPosition,
+                    props.gridSize
+                )}
+            </pre>
+            {info}
+        </div>
     );
 }
