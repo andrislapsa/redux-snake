@@ -76,46 +76,12 @@ export function updateOtherPlayers(state, action) {
     return state;
 }
 
-export function spawnFood(state, action) {
-    if (action.type === consts.SPAWN_FOOD) {
-        return state.set("foodPosition", snakeUtil.randomFoodPosition(
-            state.get("snakeBody"),
-            state.get("gridSize").get("width"),
-            state.get("gridSize").get("height")
-        ));
-    }
-
-    return state;
-}
-
 export function updateFood(state, action) {
     if (action.type === consts.UPDATE_FOOD_POSITION) {
-        return state.set("foodPosition", fromJS({ x: action.x, y: action.y }));
+        return state.set("foodPosition", fromJS(action.foodPosition));
     }
 
     return state;
-}
-
-export function increaseScore(state, action) {
-    if (action.type !== consts.INCREASE_SCORE) {
-        return state;
-    }
-
-    return state + action.amount;
-}
-
-export function increaseSpeed(state, action) {
-    if (action.type !== consts.INCREASE_SPEED) {
-        return state;
-    }
-
-    let newState = state - action.amount;
-
-    if (newState < 0) {
-        return 0;
-    }
-
-    return newState;
 }
 
 export function decreaseCameraOffsetZ(state, action) {

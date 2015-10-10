@@ -2,7 +2,6 @@ import * as actions from "./actions/actionCreators";
 import * as snakeUtil from "../src/utils/snakeUtil";
 import * as log from "./log";
 
-const speed = 300;
 let emptyTickLogged = false;
 
 export default function ticker(store, io) {
@@ -22,10 +21,13 @@ export default function ticker(store, io) {
 
     emptyTickLogged = false;
 
-    let foodPosition = state.get("foodPosition");
-
     players.map((player, playerId) => {
         let headPosition = snakeUtil.getHead(player.get("snakeBody"));
+
+        if (snakeUtil.positionsMatch(headPosition, state.get("foodPosition"))) {
+            log.debug(`Spawning new food`);
+            store.dispatch(actions.spawnFood());
+        }
 
         // Here we can make collision detection with food or other players
         log.debug(`[${playerId}] stalledTicks ${player.get("stalledTicks")} @ ${headPosition}`);
@@ -33,7 +35,9 @@ export default function ticker(store, io) {
 
     store.dispatch(actions.cleanupStalledPlayers());
 
-    let food = { hehe: "food" };
-
-    io.emit("serverTick", { players, food });
+    io.emit("serverTick", {
+        players,
+        foodPosition: state.get("foodPosition"),
+        speed: state.get("speed")
+    });
 }

@@ -22,6 +22,10 @@ function renderGrid(players, foodPosition, gridSize) {
     let grid = snakeUtil.generateGrid();
 
     players.map((player) => {
+        if (!player.get("snakeBody")) {
+            return;
+        }
+
         grid = putSnakeBodyIntoGrid(player.get("snakeBody"), grid, gridSize);
     });
 

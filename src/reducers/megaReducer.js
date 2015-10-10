@@ -4,8 +4,6 @@ import * as reducer from "./snake";
 export default function (state, action) {
     state = reducer.initGame(state, action);
 
-    state = reducer.spawnFood(state, action);
-
     state = reducer.updateFood(state, action);
 
     state = reducer.startGame(state, action);
@@ -29,15 +27,15 @@ export default function (state, action) {
         reducer.resetDirectionBufferFlag(state.get("directionChangedInTick"), action)
     );
 
-    state = state.set(
-        "score",
-        reducer.increaseScore(state.get("score"), action)
-    );
-
-    state = state.set(
-        "speed",
-        reducer.increaseSpeed(state.get("speed"), action)
-    );
+    // state = state.set(
+    //     "score",
+    //     reducer.increaseScore(state.get("score"), action)
+    // );
+    //
+    // state = state.set(
+    //     "speed",
+    //     reducer.increaseSpeed(state.get("speed"), action)
+    // );
 
     state = state.set(
         "cameraOffsetZ",

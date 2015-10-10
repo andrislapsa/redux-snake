@@ -9,10 +9,12 @@ export function createSocket() {
 export function registerSocket(store, socket) {
     socket.on("connect", function(data) {
         store.dispatch(actions.initGame(socket));
+        store.dispatch(actions.startGame());
     });
 
     socket.on("serverTick", data => {
+        window.serverLastTickData = data;
+        store.dispatch(actions.updateFoodPosition(data.foodPosition));
         store.dispatch(actions.updateOtherPlayers(data.players));
-        // store.dispatch(actions.updateFoodPosition(data.food));
     });
 }

@@ -7,6 +7,8 @@ import initialPlayerState from "../src/initialState";
 import * as snakeUtil from "../src/utils/snakeUtil";
 
 export default function (state, action) {
+    state = spawnFood(state, action);
+
     state = state.set(
         "players",
         addPlayer(state.get("players"), action)
@@ -95,4 +97,40 @@ function updatePlayerSnake(state, action) {
     }
 
     return state;
+}
+
+export function spawnFood(state, action) {
+    if (action.type === consts.SPAWN_FOOD) {
+        let occupiedBlocks = state.get("players").filter(player => player.get("snakeBody"));
+
+        return state.set("foodPosition", snakeUtil.randomFoodPosition(
+            occupiedBlocks,
+            state.get("gridSize").get("width"),
+            state.get("gridSize").get("height")
+        ));
+    }
+
+    return state;
+}
+
+export function increaseScore(state, action) {
+    if (action.type !== consts.INCREASE_SCORE) {
+        return state;
+    }
+
+    return state + action.amount;
+}
+
+export function increaseSpeed(state, action) {
+    if (action.type !== consts.INCREASE_SPEED) {
+        return state;
+    }
+
+    let newState = state - action.amount;
+
+    if (newState < 0) {
+        return 0;
+    }
+
+    return newState;
 }

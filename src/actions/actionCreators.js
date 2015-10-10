@@ -53,25 +53,6 @@ export function pauseGame() {
 	};
 }
 
-export function increaseScore(amount=1) {
-	return {
-		type: consts.INCREASE_SCORE,
-        amount
-	};
-}
-
-export function increaseSpeed(amount=5) {
-	return {
-		type: consts.INCREASE_SPEED,
-        amount
-	};
-}
-
-export function spawnFood() {
-	return {
-		type: consts.SPAWN_FOOD
-	};
-}
 
 export function decreaseCameraOffsetZ(amount=0.5) {
 	return {
@@ -80,9 +61,10 @@ export function decreaseCameraOffsetZ(amount=0.5) {
 	};
 }
 
-export function updateFoodPosition() {
+export function updateFoodPosition(foodPosition) {
 	return {
-		type: consts.UPDATE_FOOD_POSITION
+		type: consts.UPDATE_FOOD_POSITION,
+        foodPosition
 	};
 }
 

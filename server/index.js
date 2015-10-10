@@ -13,12 +13,11 @@ let compiler = webpack(config);
 import { createStore } from "redux";
 import megaReducer from "./reducer";
 import initialState from "./initialState";
-import { fromJS } from "immutable";
 import ticker from "./ticker"
 import { createSocket, registerSocket } from "../src/socket/initServer";
 import * as log from "./log";
 
-const store = createStore(megaReducer, fromJS(initialState));
+const store = createStore(megaReducer, initialState);
 
 app.use(require("webpack-dev-middleware")(compiler, {
     noInfo: true,

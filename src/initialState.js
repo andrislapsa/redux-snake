@@ -1,9 +1,9 @@
-import { Map } from "immutable";
+import { fromJS } from "immutable";
 
 import * as snakeUtil from "./utils/snakeUtil";
 import * as config from "../src/config/config";
 
-export default {
+export default fromJS({
     direction: "up",
     bufferedDirection: null, // used for better handling when multiple direction keystrokes are made in one tick
     playerId: "",
@@ -16,10 +16,10 @@ export default {
     isGameStarted: false, // false when just initialized
     isGamePaused: true,
     score: 0,
-    foodPosition: {x:20, y: 20},
-    gridSize: {width: 40, height: 40},
+    foodPosition: { x: 0, y: 0 },
+    gridSize: config.GRID_SIZE,
     cameraOffsetZ: 30,
     directionChangedInTick: false,
     players: {},
     socket: null
-};
+});
