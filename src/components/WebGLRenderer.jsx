@@ -4,7 +4,6 @@ import Game from "../renderer/Game";
 
 export default class WebGLRenderer extends Component {
     _updateWebglState() {
-        console.log("WebGLRenderer", this.props);
         this.game.updateState(this.props);
     }
 

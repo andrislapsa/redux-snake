@@ -1,4 +1,6 @@
 import THREE from "three";
+import { fromJS } from "immutable";
+
 import Segment from "./Segment";
 import Food from "./Food";
 import Player from "./Player";
@@ -80,8 +82,12 @@ var Game = class {
 
         var self = this;
         var foodPos = this.currentState.foodPosition;
+        let currentPlayer = fromJS({ snakeBody: this.currentState.snakeBody });
+        let players = this.currentState.players.set(
+            this.currentState.playerId, currentPlayer
+        );
 
-        this.currentState.players.forEach( (playerData, playerId) => {
+        players.forEach( (playerData, playerId) => {
             if (!(playerId in self.players)) {
                 var player = new Player(self, playerId);
 

@@ -51,7 +51,7 @@ function cleanupStalledPlayers(state, action) {
             oldPosition = snakeUtil.getHead(fromJS(player.previousSnakeBody));
             newPosition = snakeUtil.getHead(fromJS(player.snakeBody));
 
-            if (snakeUtil.positionsMatch(oldPosition, newPosition)) {
+            if (snakeUtil.positionsMatch(oldPosition, newPosition) || !oldPosition) {
                 player.stalledTicks++;
             }
 
